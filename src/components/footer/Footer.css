@@ -1,0 +1,83 @@
+/* Footer.css */
+.footer-section {
+    background-color: #f7f7f7;
+    padding: 2rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.footer-links div {
+    width: 20%;
+}
+
+.footer-links h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: lightpink;
+}
+
+.footer-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    color: #555;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e6e6e6;
+    padding-top: 1rem;
+}
+
+.dropdown-container {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-with-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.dropdown-with-icon svg {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.dropdown-with-icon select {
+    padding: 0.5rem;
+}
+.footer-terms span {
+    margin-right: 1rem;
+}
+
+.footer-terms a {
+    margin-left: 1rem;
+    color: #555;
+    text-decoration: none;
+}
+.social-icons {
+    display: flex;
+    justify-content: center;
+}
+.facebook {
+    color: blue;
+}
+.instagram {
+    color: pink;
+}
+.x {
+    color: rgb(64, 190, 232);
+}

@@ -1,0 +1,43 @@
+.location-details-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .details-container {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .main-image {
+    width: 60%;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 20px;
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .cost-calculator {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reserve-button {
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .reserve-button:hover {
+    background-color: #ff383b;
+  }
+  

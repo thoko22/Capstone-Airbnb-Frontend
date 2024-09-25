@@ -1,3 +1,4 @@
+/* Base styles */
 .App {
   text-align: center;
 }
@@ -20,12 +21,42 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 2vmin); /* Responsive font size */
   color: white;
+  padding: 20px; /* Adding padding for smaller screens */
+}
+
+/* Responsive App-logo size based on screen width */
+@media (max-width: 768px) {
+  .App-logo {
+    height: 30vmin; /* Decrease the size on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .App-logo {
+    height: 20vmin; /* Further decrease for mobile devices */
+  }
+}
+
+/* Responsive header adjustments */
+@media (max-width: 768px) {
+  .App-header {
+    font-size: calc(8px + 2vmin); /* Smaller font size for tablet devices */
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    font-size: calc(6px + 2vmin); /* Smaller font size for mobile devices */
+    padding: 10px;
+  }
 }
 
 .App-link {
   color: #61dafb;
+  font-size: 1rem; /* Make font size relative */
 }
 
 @keyframes App-logo-spin {
@@ -36,3 +67,7 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+

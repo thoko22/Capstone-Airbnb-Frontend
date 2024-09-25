@@ -1,0 +1,282 @@
+.header {
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding and borders are included in width */
+  padding: 10px 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 80px;
+  width: 100%;
+}
+.header-logo {
+  width: 300px; /* Increased width for a larger logo */
+  height: auto; /* Maintain the aspect ratio */
+  object-fit: contain; /* Ensures the image doesn't stretch */
+  cursor: pointer; /* Optional: makes it clickable if it’s linked */
+  margin-left: 10px; /* Optional: adds spacing to the left */
+  margin-right: 20px; /* Optional: adds spacing to the right */
+  transition: transform 0.3s ease; /* Smooth animation effect */
+}
+
+.header-logo:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #6a6a6a;
+}
+
+.header-links p {
+  font-size: 14px;
+  cursor: pointer;
+}
+.header-links .language-icon {
+  font-size: 19px;
+  cursor: pointer;
+}
+.profile-menu-icons {
+  display: flex;
+  background-color: #fff;
+  border-radius: 50px;
+  border: 1px solid lightgray;
+  color: #6a6a6a;
+  width: 86px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.profile-menu-icons:hover {
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.1);
+}
+.profile-menu-icons .menu-icon {
+  font-size: 20px;
+}
+.profile-menu-icons .account-icon {
+  font-size: 32px;
+}
+.header img {
+  width: 100px;
+}
+.header-text {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 400;
+  margin: 0 0 0 150px;
+  cursor: pointer;
+}
+.header-text p {
+  padding: 10px;
+  border-radius: 20px;
+}
+.header-text p:hover {
+  background-color: #efe6e6;
+}
+/* search section */
+
+.header-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: white; /* Or a color from your Figma design */
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners */
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  flex-grow: 1;
+}
+
+.header-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #f1f1f1;
+  border-radius: 50px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-where,
+.search-checkin,
+.search-checkout,
+.search-who {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  text-align: start;
+  flex: 1; /* Ensure all sections take equal space */
+  min-width: 0;
+}
+
+.search-where p,
+.search-checkin p,
+.search-checkout p,
+.search-who p {
+  font-size: 12px;
+  color: #717171;
+  margin-bottom: 5px;
+  text-align: start;
+}
+.search-where, .search-checkin, .search-checkout {
+  flex: 1; /* Ensure equal space distribution */
+}
+
+.search-who {
+  position: relative;
+  flex: 1;
+}
+
+.search-input input, .date-picker {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%; /* Full width within its container */
+  box-sizing: border-box;
+}
+
+.search-input-location input{
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  width: 80%;
+}
+.search-input-location{
+  display: flex;
+}
+.search-button {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.search-button:hover {
+  border-color: #000; /* Add hover effect */
+}
+
+/* Guests */
+.guest-popup {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.guest-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guest-category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.guest-category p {
+  margin: 0;
+  font-size: 14px;
+  color: #717171;
+}
+
+.guest-input {
+  border: none;
+  font-size: 16px;
+  width: 50px;
+  text-align: center;
+}
+
+.guest-button {
+  background-color: #ff7779;
+  color: #fff;
+  border: none;
+  padding: 5px 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-size: 18px;
+}
+
+.guest-button:hover {
+  background-color: #ff4444;
+}
+
+
+.search-icon-container {
+  background-color: #ff385c; /* Airbnb red */
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.search-Icon {
+  color: white;
+  font-size: 20px;
+}
+
+.search-icon-container:hover {
+  background-color: #e91e63;
+}
+
+/* styles login modal */
+.login-modal {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}

@@ -1,0 +1,76 @@
+.discover-airbnb {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 40px;
+}
+
+.discover-airbnb h1 {
+  grid-column: span 2;
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 2.5rem;
+}
+
+.column {
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.discover-airbnb .column:first-child {
+  background-image: url("https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7");
+}
+
+.discover-airbnb .column:last-child {
+  background-image: url("https://www.awf.org/sites/default/files/2021-06/AfricanGiraffe_WildlifeConservation_AWF.jpg");
+}
+
+.discover-airbnb h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.discover-airbnb p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.discover-airbnb button {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+  width: max-content;
+}
+
+.discover-airbnb button:hover {
+  background-color: pink;
+  transform: scale(1.05); 
+}
+
+.discover-airbnb button:active {
+  background-color: lightpink; 
+  transform: scale(0.98); 
+}
+
+.column h3,
+.column p {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}

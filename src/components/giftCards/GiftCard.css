@@ -1,0 +1,94 @@
+/* Container for both sections */
+.shop-hosting-section {
+    margin-bottom: 60px;
+  }
+  
+  /* Shop Airbnb Gift Cards Section */
+  .shop-airbnb {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 40px 0;
+  }
+  .shop-airbnb-content {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    height: 400%;
+  }
+  .shop-airbnb h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  
+  .gift-card-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+  }
+  
+  .gift-card img {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+  }
+  
+  .shop-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+  }
+  
+  .shop-button:hover {
+    background-color: #e0484d;
+  }
+  
+  /* Static Hosting Banner Section */
+  .hosting-banner {
+    position: relative;
+    background-image: url('https://health.ucdavis.edu/media-resources/contenthub/health-news/2023/03/thumbnail/headphones-young-girl-th.jpg'); /* Replace with actual image */
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hosting-content {
+    text-align: left;
+    color: white;
+  }
+  
+  .hosting-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: white;
+    text-align: left;
+  }
+  
+  .hosting-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    text-align: left;
+    background-color: white;
+    color: #ff5a5f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: max-content;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .hosting-button:hover {
+    background-color: #ff5a5f;
+    color: white;
+  }
+  

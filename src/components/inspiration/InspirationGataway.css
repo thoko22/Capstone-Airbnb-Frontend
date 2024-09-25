@@ -1,0 +1,35 @@
+.inspiration-section {
+    margin: 2rem 0;
+}
+
+.inspiration-tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid grey;
+}
+
+.inspiration-tabs span {
+    cursor: pointer;
+    color: #ff5a5f;
+    padding: 0.5rem;
+}
+
+.inspiration-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inspiration-list ul {
+    list-style-type: none;
+}
+
+.inspiration-list li {
+    font-weight: bold;
+}
+
+.inspiration-list li small {
+    display: block;
+    font-weight: normal;
+    color: gray;
+}

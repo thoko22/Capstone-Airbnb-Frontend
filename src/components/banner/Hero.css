@@ -1,0 +1,57 @@
+.hero-container {
+  background-image: url("https://images.ctfassets.net/n2ifzifcqscw/1ACJoYTLdkE08Z48FgMxDQ/af86727bfe7db83381b56e098fa2f425/Airbnb-alternatives-Hero-image.jpeg?w=1024&fm=webp"); /* Replace with your background image */
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: #ff5a5f;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ff5a5f;
+}
+
+.hero-search {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  margin-top: 40px;
+  background-color: #ff5a5f;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: max-content;
+}
+.search-button:hover {
+  background-color: rgb(227, 119, 203);
+  color: white;
+}

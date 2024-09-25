@@ -1,0 +1,28 @@
+/* src/components/AccommodationList.css */
+
+.accommodation-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .accommodation-item {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .accommodation-item h2 {
+    margin: 0 0 10px;
+  }
+  
+  .accommodation-item p {
+    margin: 5px 0;
+  }
+  
+  .accommodation-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  

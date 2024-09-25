@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  width: 100%;
+  padding: 40px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo {
+  cursor: pointer;
+}
+
+.header-text {
+  font-size: 1rem;
+  color: #484848;
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.language-icon, .menu-icon, .account-icon {
+  cursor: pointer;
+}
+
+.profile-menu-icons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Filter Bar Styling */
+.filter-bar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filter-bar button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-bar button:hover {
+  border-color: #b0b0b0;
+}
+
+.filters button {
+  padding-left: 10px;
+}
+
+.filters button svg {
+  vertical-align: middle;
+}
+
+/* Property List Styling */
+.property-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.property-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.property-card img {
+  width: 200px;
+  border-radius: 10px;
+}
+
+.property-info {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.property-info h3 {
+  font-size: 1.5rem;
+  color: #222;
+  margin: 10px 0;
+}
+
+.property-info p {
+  font-size: 1rem;
+  color: #484848;
+}
+
+.rating {
+  font-size: 1rem;
+  color: #ff385c;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #222;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .property-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .property-info {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+}
+
