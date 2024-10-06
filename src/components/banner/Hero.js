@@ -10,7 +10,7 @@ const Hero = () => {
           Discover amazing places and experiences around the world.
         </p>
         <div className="hero-search">
-        <button className="search-button">Search Destination</button>
+        <button className="search-destination">Search Destination</button>
         </div>
       </div>
     </div>

@@ -1,0 +1,267 @@
+.reviews-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.ratings-summary {
+  margin-bottom: 20px; /* Space below the ratings summary */
+}
+
+.ratings-summary h2 {
+  margin: 0 0 15px; /* Space below the title */
+  font-size: 24px; /* Title font size */
+  font-weight: bold; /* Bold title */
+}
+
+.ratings-list {
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack items vertically */
+}
+
+.rating-item {
+  display: flex; /* Flexbox for category and score */
+  justify-content: space-between; /* Space between elements */
+  padding: 10px 0; /* Vertical padding */
+  border-bottom: 1px solid #e0e0e0; /* Bottom border */
+}
+
+.rating-category {
+  font-size: 16px; /* Font size for category */
+}
+
+.rating-score {
+  font-size: 18px; /* Font size for score */
+  font-weight: bold; /* Bold score */
+}
+
+.rating-stars {
+  margin-left: 10px; /* Space between score and stars */
+  color: #ff385c; /* Star color */
+}
+
+.rating-total {
+  margin-left: 10px; /* Space between stars and total */
+  color: #666; /* Light gray for total */
+}
+
+.individual-reviews h2 {
+  margin: 20px 0 15px; /* Space around the title */
+  font-size: 24px; /* Title font size */
+  font-weight: bold; /* Bold title */
+}
+
+.review-item {
+  display: flex; /* Flexbox for profile pic and review content */
+  align-items: center; /* Center items vertically */
+  margin-bottom: 15px; /* Space below each review */
+}
+
+.profile-pic {
+  width: 50px; /* Width of profile picture */
+  height: 50px; /* Height of profile picture */
+  border-radius: 50%; /* Circular profile picture */
+  margin-right: 15px; /* Space to the right of the picture */
+  object-fit: cover; /* Crop to fit */
+}
+
+.review-content {
+  flex-grow: 1; /* Allow content to grow */
+}
+
+.review-date {
+  font-size: 14px; /* Smaller font for date */
+  color: #666; /* Light gray color */
+}
+
+.show-all-reviews-button {
+  margin-top: 15px; /* Space above button */
+  padding: 10px 20px; /* Padding for button */
+  background-color: #ff385c; /* Airbnb red */
+  color: #fff; /* White text */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners for button */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.show-all-reviews-button:hover {
+  background-color: #e0294d; /* Darker red on hover */
+}
+
+/* Base styles for the reviews container */
+.reviews-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Overall Ratings Section */
+.ratings-summary h2,
+.individual-reviews h2,
+.host-response-section h2,
+.things-to-know-section h2 {
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e0294d;
+}
+
+/* Ratings List */
+.ratings-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.rating-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #f8f8f8;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.rating-category {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.rating-score {
+  font-size: 16px;
+}
+
+.rating-stars {
+  color: #ffb400;
+}
+
+/* Individual Reviews Section */
+.individual-reviews .review-item {
+  display: flex;
+  align-items: flex-start;
+  margin: 15px 0;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.review-content {
+  max-width: 600px;
+}
+
+.review-content h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.review-date {
+  color: #555;
+  font-size: 14px;
+}
+
+.review-text {
+  margin: 10px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Show All Reviews Button */
+.show-all-reviews-button {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.show-all-reviews-button:hover {
+  background-color: #e03350;
+}
+
+/* Things to Know Section */
+.things-to-know-section {
+  margin-top: 40px;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.things-to-know-categories {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.category {
+  flex: 1;
+}
+
+.category h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color:#e03350;
+}
+
+.category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.category ul li {
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .things-to-know-categories {
+    flex-direction: column;
+  }
+
+  .category {
+    margin-bottom: 20px;
+  }
+}
+/* Styles for Explore Options Section */
+.explore-options-section {
+    margin-top: 2rem;
+    border: 1px solid #e0e0e0; /* Light border for separation */
+    padding: 1rem;
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fafafa; /* Light background color */
+  }
+  
+  .explore-options-section h2 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+  
+  .explore-options-section .options-categories {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .explore-options-section .category {
+    width: 48%; /* Adjust width as needed */
+  }
+  
+  .explore-options-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .explore-options-section li {
+    margin: 0.5rem 0;
+  }
+  

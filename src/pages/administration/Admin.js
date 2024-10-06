@@ -1,43 +1,19 @@
-import React, { useState } from 'react';
+import React from "react";
 import "./Admin.css";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { Button, TextField, Modal, Box } from '@mui/material';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Admin = () => {
-  const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    rooms: '',
-    baths: '',
-    type: '',
-    location: '',
-    description: '',
-    amenities: '',
-    image: null
-  });
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
-  };
-
-  const handleSubmit = () => {
-    // Handle form submission (e.g., send formData to the backend)
-    console.log(formData);
-    handleClose();
-  };
-
   return (
     <>
-      <div className='header-admin'>
-        <img src='https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png' alt="logo" className="header-logo" />
+      <div className="header-admin">
+        <img
+          src="https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png"
+          alt="logo"
+          className="header-logo"
+        />
         <div className="profile-container">
           <div className="profile-div">
             <MenuRoundedIcon />
@@ -45,109 +21,68 @@ const Admin = () => {
           </div>
         </div>
       </div>
-
-      <div className='button-container'>
-        <Button variant='outlined'>View Reservation</Button>
-        <Button variant='outlined'>View Listing</Button>
-        <Button variant='outlined' onClick={handleOpen}>Create Listing</Button>
+      <div className="button-container">
+        <Button variant="outlined" component={Link} to="/view-reservations">
+          View Reservation
+        </Button>
+        <Button variant="outlined" component={Link} to="/view-listings">
+          View Listing
+        </Button>
+        <Button variant="outlined" component={Link} to="/create-listing">
+          Create Listing
+        </Button>
       </div>
-
       <hr />
-      <p className='hotel-list'>My Hotel List</p>
+      <p className="hotel-list">My Hotel List</p>
       <hr />
 
       {/* Example of existing hotel listings */}
-      <div className='img-container'>
-        <div className='img-content'>
-          <img src="https://a0.muscache.com/im/pictures/miso/Hosting-872294280468339009/original/9ac867f1-ec81-498b-b356-4b52c402fb75.jpeg?im_w=720" alt="img" />
-          <button className='update'>Update</button>
-          <button className='delete'>Delete</button>
+      <div className="img-container">
+        <div className="img-content">
+          <img
+            src="https://a0.muscache.com/im/pictures/miso/Hosting-872294280468339009/original/9ac867f1-ec81-498b-b356-4b52c402fb75.jpeg?im_w=720"
+            alt="img"
+          />
+          <button className="update">Update</button>
+          <button className="delete">Delete</button>
         </div>
-        <div className='img-content-info'>
-          <p>3 bedroom</p>
-          <p className='hotel-name'><strong>Sandton Hotel</strong></p>
+        <div className="img-content-info">
+          <p>3 bedrooms</p>
+          <p><strong>Sandton Hotel</strong></p>
+          <hr />
           <p>4-5 guests . 4 bath . 5 beds</p>
           <p>Wifi . Kitchen . Free parking</p>
-          <p>Rating: {5.0} ⭐ ({150} reviews) <strong>$250</strong> /night</p>
+          <hr />
+          <p>
+            Rating: {5.0} ⭐ ({150} reviews) <strong>$250</strong> /night
+          </p>
         </div>
-        <hr />
       </div>
 
-      {/* Create Listing Modal */}
-      <Modal open={open} onClose={handleClose}>
-        <Box className="modal-box">
-          <h2>Create Listing</h2>
-          <TextField 
-            label="Listing Name" 
-            name="name" 
-            value={formData.name} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
+      <div className="img-container">
+        <div className="img-content">
+          <img
+            src="https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-6f3a0f5/www.decorilla.com/online-decorating/wp-content/uploads/2022/05/Airbnb-interior-designer-Lori-D-1024x768.jpeg"
+            alt="img"
           />
-          <TextField 
-            label="Rooms" 
-            name="rooms" 
-            value={formData.rooms} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
-          />
-          <TextField 
-            label="Baths" 
-            name="baths" 
-            value={formData.baths} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
-          />
-          <TextField 
-            label="Type (e.g., Apartment, House)" 
-            name="type" 
-            value={formData.type} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
-          />
-          <TextField 
-            label="Location" 
-            name="location" 
-            value={formData.location} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
-          />
-          <TextField 
-            label="Description" 
-            name="description" 
-            value={formData.description} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
-            multiline 
-            rows={2} 
-          />
-          <TextField 
-            label="Amenities (e.g., Wifi, Kitchen)" 
-            name="amenities" 
-            value={formData.amenities} 
-            onChange={handleInputChange} 
-            fullWidth 
-            margin="normal" 
-          />
-          <Button variant="contained" component="label" fullWidth>
-            Upload Image
-            <input type="file" hidden onChange={handleFileChange} />
-          </Button>
-
-          <div className="modal-actions">
-            <Button variant="contained" onClick={handleSubmit}>Create</Button>
-            <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-          </div>
-        </Box>
-      </Modal>
+          <button className="update">Update</button>
+          <button className="delete">Delete</button>
+        </div>
+        <div className="img-content-info">
+          <p>2 bedrooms</p>
+          <p><strong>Beachfront</strong></p>
+          <hr />
+          <p>2 guests . 2 bath . 2 beds</p>
+          <p>Wifi . Pool . Beach</p>
+          <hr />
+          <p>
+            Rating: {5.0} ⭐ ({50} reviews) <strong>$350</strong> /night
+          </p>
+        </div>
+      </div>
+      <hr />
     </>
   );
-}
+};
 
 export default Admin;

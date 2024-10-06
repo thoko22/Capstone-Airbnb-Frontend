@@ -112,9 +112,6 @@ hr {
 .delete:hover {
   background-color: rgb(215, 113, 113); /* Darker shade on hover */
 }
-.hotel-name {
-  border-bottom: 1px solid lightgrey;
-}
 
 .modal-box {
   position: absolute;
@@ -179,3 +176,4 @@ button:hover {
     transform: translate(-50%, -50%);
   }
 }
+

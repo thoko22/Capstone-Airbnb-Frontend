@@ -16,13 +16,13 @@
   width: 100%;
 }
 .header-logo {
-  width: 300px; /* Increased width for a larger logo */
-  height: auto; /* Maintain the aspect ratio */
-  object-fit: contain; /* Ensures the image doesn't stretch */
-  cursor: pointer; /* Optional: makes it clickable if it’s linked */
-  margin-left: 10px; /* Optional: adds spacing to the left */
-  margin-right: 20px; /* Optional: adds spacing to the right */
-  transition: transform 0.3s ease; /* Smooth animation effect */
+  width: 300px;
+  height: auto; 
+  object-fit: contain;
+  cursor: pointer; 
+  margin-left: 10px;
+  margin-right: 20px;
+  transition: transform 0.3s ease;
 }
 
 .header-logo:hover {
@@ -162,10 +162,10 @@
 .search-input-location{
   display: flex;
 }
-.search-button {
-  background-color: white;
+.guests-add-button {
+  background-color: #ff7779;
   border: 1px solid #ddd;
-  padding: 10px 20px;
+  max-width: fit-content;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
@@ -208,10 +208,16 @@
 }
 
 .guest-input {
-  border: none;
-  font-size: 16px;
-  width: 50px;
+  width: 40px; /* Increase width for better visibility */
   text-align: center;
+  border: none;
+  font-size: 16px; /* Increase font size */
+  padding: 5px;
+  margin: 0 5px; /* Space between input and buttons */
+}
+
+.guest-input:read-only {
+  background: #f7f7f7;
 }
 
 .guest-button {
@@ -279,4 +285,123 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .header-search {
+    padding: 10px 15px;
+  }
+
+  .search-where,
+  .search-checkin,
+  .search-checkout,
+  .search-who {
+    margin-right: 10px; /* Reduce margin */
+  }
+}
+
+@media (max-width: 768px) {
+  .header-search {
+    flex-wrap: wrap; /* Allow wrapping */
+    padding: 15px;
+  }
+
+  .search-where,
+  .search-checkin,
+  .search-checkout,
+  .search-who {
+    margin-right: 0; /* Remove right margin */
+    width: 100%; /* Full width for all items */
+    margin-bottom: 10px; /* Add spacing between stacked items */
+  }
+
+  .search-input-location,
+  .date-picker,
+  .search-button {
+    width: 100%; /* Full width for inputs */
+  }
+
+  .search-button {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-search {
+    flex-direction: column; /* Stack all elements */
+    align-items: stretch;
+  }
+
+  .search-icon-container {
+    width: 100%; /* Full width */
+    margin-top: 15px; /* Add margin at the top */
+    padding: 15px; /* Increase padding */
+    border-radius: 30px; /* Adjust border radius */
+  }
+
+  .search-Icon {
+    font-size: 24px; /* Increase icon size */
+  }
+
+  .guest-popup {
+    width: 90%; /* Make the popup wider on mobile */
+    left: 5%; /* Center the popup */
+  }
+}
+/* Dropdown Container Styles */
+.search-where {
+  position: relative; /* Position relative for dropdown positioning */
+}
+
+/* Dropdown List Styles */
+.location-dropdown {
+  position: absolute;
+  top: 100%; /* Position below the input */
+  left: 0;
+  right: 0; /* Full width */
+  background-color: #fff; /* White background for dropdown */
+  border: 1px solid #ff99cc; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  z-index: 1000; /* Ensure dropdown is above other elements */
+  max-height: 200px; /* Optional: Limit height */
+  overflow-y: auto; /* Scroll if content exceeds max-height */
+  width: max-content;
+}
+
+/* Individual Option Styles */
+.location-option {
+  padding: 10px; /* Padding for each option */
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: background-color 0.2s; /* Smooth transition for hover effect */
+  color: #6a6a6a;
+}
+
+/* Hover Effect for Options */
+.location-option:hover {
+  background-color: #ffe6f2; /* Light gray background on hover */
+}
+
+/* Optional: First Option Styling */
+.location-dropdown .location-option:first-child {
+  font-weight: bold; /* Make the first option bold (e.g., "All Locations") */
+}
+
+/* Optional: Remove Bottom Border for Last Option */
+.location-dropdown .location-option:last-child {
+  border-bottom: none; /* Remove border from the last option if using borders */
+}
+.search-input-location input {
+  border: 1px solid #ff99cc; /* Light pink border for input */
+  padding: 10px;
+  border-radius: 10px;
+  width: 80%;
+  color: #6a6a6a; /* Dark gray text color */
+  background-color: #fff; /* Ensure the background is white */
+}
+.search-input-location input:focus {
+  outline: none; /* Remove default outline */
+  border-color: #ff66b3; /* Darker pink on focus */
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* Subtle shadow on focus */
 }

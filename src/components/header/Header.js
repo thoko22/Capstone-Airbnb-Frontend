@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -20,16 +21,46 @@ const Header = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("Select a location");
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [locations, setLocations] = useState([]); // State for locations
+  const navigate = useNavigate(); // For navigation
+
 
   const popupRef = useRef(null);
-  const locations = [
-    "All",
-    "durban",
-    "Sandton",
-    "Rivonia",
-    "Randburg",
-    "Joburg"
-  ];
+  // Fetch locations from the accommodations API
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch("http://localhost:5005/api/accommodations"); // Adjust to your specific endpoint if necessary
+    
+        // Check if response is OK (status in the range 200-299)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+    
+        const data = await response.json();
+        console.log("Fetched data:", data); // Check what you get from the API
+    
+        const uniqueLocations = [...new Set(data.map(item => item.location))]; // Extract unique locations
+        setLocations(uniqueLocations.map(location => ({ name: location }))); // Set locations state
+        console.log("Fetched locations:", uniqueLocations); // Debugging line
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    fetchLocations(); // Call the fetch function
+  }, []);
+
+  // Handle location selection
+  const handleLocationClick = (locationName) => {
+    if (locationName === 'All Locations') {
+      navigate('/locations'); // Navigate to the new locations list page
+    } else {
+      setSelectedLocation(locationName);
+      console.log(`Selected location: ${locationName}`);
+      setShowLocationDropdown(false); // Close the dropdown after selection
+    }
+  };
 
   const handleGuestChange = (type, operation) => {
     setGuestCount((prevCount) => {
@@ -75,12 +106,6 @@ const Header = () => {
     setIsLoginModalOpen(false);
   };
 
-  // Handle location selection
-  const handleLocationClick = (location) => {
-    setSelectedLocation(location);
-    setShowLocationDropdown(false); // Close the dropdown after selecting
-  };
-
   return (
     <div className="header">
       <div className="top-header">
@@ -108,32 +133,41 @@ const Header = () => {
       </div>
 
       <div className="header-bottom">
-        <div className="header-search">
-          <div className="search-where">
-            <p>Locations</p>
-            <div
-              className="search-input-location"
-              onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-            >
-              <input
-                type="text"
-                value={selectedLocation}
-                readOnly
-                placeholder="Select a location"
-                className="location-input"
-              />
-              <ArrowDropDownIcon className="location-dropdown-icon" />
-            </div>
-            {showLocationDropdown && (
-              <div className="location-dropdown">
-                {locations.map((location, index) => (
-                  <div
-                    key={index}
-                    className="location-option"
-                    onClick={() => handleLocationClick(location)}
-                  >
-                    {location}
-                  </div>
+      <div className="header-search">
+        <div className="search-where">
+          <p>All locations</p>
+          <div
+            className="search-input-location"
+            onClick={() => {
+              setShowLocationDropdown(!showLocationDropdown);
+              console.log("Dropdown Toggled:", !showLocationDropdown); // Debugging line
+            }}
+          >
+            <input
+              type="text"
+              value={selectedLocation}
+              readOnly
+              placeholder="Select a location"
+              className="location-input"
+            />
+            <ArrowDropDownIcon className="location-dropdown-icon" />
+          </div>
+          {showLocationDropdown && (
+            <div className="location-dropdown">
+              <div
+                className="location-option"
+                onClick={() => handleLocationClick('All Locations')}
+              >
+                All Locations
+              </div>
+              {locations.map((location, index) => (
+                <div
+                  key={index}
+                  className="location-option"
+                  onClick={() => handleLocationClick(location.name)}
+                >
+                  {location.name}
+                </div>
                 ))}
               </div>
             )}
@@ -162,7 +196,7 @@ const Header = () => {
           <div className="search-who">
             <p>Guests</p>
             <button
-              className="search-button"
+              className="guests-button"
               onClick={() => setShowGuestPopup(true)}
             >
               {guestCount.adults > 0 || guestCount.kids > 0
@@ -184,7 +218,7 @@ const Header = () => {
                       type="number"
                       value={guestCount.adults}
                       readOnly
-                      className="guest-input"
+                      className="guests-input"
                     />
                     <button
                       className="guest-button"

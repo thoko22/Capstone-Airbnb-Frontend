@@ -1,58 +1,77 @@
-import React from 'react';
-import './LocationPage.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./LocationPage.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const LocationPage = ({ setSelectedLocation }) => {
-  const locations = [
-    {
-      id: 1,
-      name: 'New York',
-      type: 'Entire apartment',
-      amenities: ['WiFi', 'Kitchen', 'Free parking'],
-      price: 320,
-      images: ['https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-6f3a0f5/www.decorilla.com/online-decorating/wp-content/uploads/2022/05/Interior-design-for-Airbnb-Drew-F-1024x768.jpg'],
-    },
-    {
-      id: 2,
-      name: 'Los Angeles',
-      type: 'Private room',
-      amenities: ['WiFi', 'Pool'],
-      price: 250,
-      images: ['https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-6f3a0f5/www.decorilla.com/online-decorating/wp-content/uploads/2022/05/Airbnb-interior-designer-Lori-D-1024x768.jpeg'],
-    },
-    {
-      id: 2,
-      name: 'Durban',
-      type: 'Beachfront Villa',
-      amenities: ['WiFi', 'Pool', 'Private beach'],
-      price: 450,
-      images: ['https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-6f3a0f5/www.decorilla.com/online-decorating/wp-content/uploads/2022/05/Airbnb-interior-designer-Lori-D-1024x768.jpeg'],
-    },
-  
-  ];
+const LocationPage = () => {
+  // State to hold the fetched locations
+  const [locations, setLocations] = useState([]);
+  const navigate = useNavigate();
 
-  const handleLocationSelect = (location) => {
-    setSelectedLocation(location);
+  // Fetch locations from the backend
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5005/api/accommodations"
+        );
+        setLocations(response.data); // Set the locations state with data from the response
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    fetchLocations();
+  }, []); // Empty dependency array means it runs once when component mounts
+
+  const handleImageClick = () => {
+    navigate('/listings');
   };
 
   return (
     <div className="location-page">
-      <h1>Locations</h1>
+      <h1>All locations</h1>
       <div className="location-list">
-        {locations.map((location) => (
-          <Link
-            to="/location-details"
-            key={location.id}
-            onClick={() => handleLocationSelect(location)}
-            className="location-card"
-          >
-            <img src={location.images[0]} alt={location.name} className="location-image" />
-            <h2>{location.name}</h2>
-            <p>Type: {location.type}</p>
-            <p>Amenities: {location.amenities.join(', ')}</p>
-            <p>Price per night: ${location.price}</p>
-          </Link>
-        ))}
+        {locations.length > 0 ? (
+          locations.map((location) => (
+            <div key={location._id} className="location-card">
+              {/* Use an image click handler instead of Link */}
+              <img
+                src={`http://localhost:5005/${location.images[0]}`}
+                alt={location.title}
+                className="location-image"
+                onClick={() => handleImageClick(location)} // Call the click handler with location data
+                style={{ cursor: 'pointer' }} // Indicate clickable image
+              />
+              <div className="location-card-content">
+                <h2>{location.location}</h2>
+                <div className="location-details">
+                  <ul className="location-description">
+                    <li>
+                      <span>Type:</span> {location.title}
+                    </li>
+                    <li>
+                      <span>Amenities:</span>{" "}
+                      {location.amenities
+                        .map((amenity) => JSON.parse(amenity))
+                        .flat()
+                        .join(", ")}
+                    </li>
+                    <li>
+                      <span>Price per night:</span> ${location.price}
+                    </li>
+                  </ul>
+                  <span className="star-rating">
+                    5 <span className="stars">★★★★★</span>{" "}
+                    <span className="review-text">(150 reviews)</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>Loading locations...</p>
+        )}
       </div>
     </div>
   );

@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import axios from 'axios';
 import './LocationDetailsPage.css';
 
-const LocationDetailsPage = ({ location }) => {
-  // if (!location) {
-  //   return <h2>Please select a location to view details.</h2>;
-  // }
+const LocationDetailsPage = () => {
+  const { state } = useLocation(); // Get the state from the Link component
+  const { id } = useParams(); // Get the location ID from the URL params
+  const [location, setLocation] = useState(state?.location); // Initialize with state if available
 
+    // Fetch location data using the ID if the state is not available
+    useEffect(() => {
+      if (!state?.location) {
+        // State is not available, fetch the location data from the API
+        const fetchLocation = async () => {
+          try {
+            const response = await axios.get(`http://localhost:5005/api/accommodations/${id}`);
+            setLocation(response.data);
+          } catch (error) {
+            console.error("Error fetching location data:", error);
+          }
+        };
+        fetchLocation();
+      }
+    }, [id, state]);
+  
+
+
+  // Check if location data is available, if not, display an error message
+  if (!location) {
+    return <h2>Location data not found. Please go back and select a location.</h2>;
+  }
+
+   // Destructure location properties
   const {
     images,
     type,
@@ -29,7 +55,7 @@ const LocationDetailsPage = ({ location }) => {
       <h1>{title}</h1>
       <h2>{type} in {loc}</h2>
       <div className="details-container">
-        <img src={images[0]} alt={title} className="main-image" />
+        <img src={`http://localhost:5005/${images[0]}`} alt={title} className="main-image" />
         <div className="details">
           <h3>Details</h3>
           <p>{description}</p>
@@ -54,3 +80,4 @@ const LocationDetailsPage = ({ location }) => {
 };
 
 export default LocationDetailsPage;
+

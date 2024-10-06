@@ -1,43 +1,87 @@
+/* LocationDetailsPage.css */
+
 .location-details-page {
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .details-container {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  
-  .main-image {
-    width: 60%;
-    height: auto;
-    border-radius: 8px;
-    margin-right: 20px;
-  }
-  
-  .details {
-    flex: 1;
-  }
-  
-  .cost-calculator {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .reserve-button {
-    background-color: #ff5a5f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .reserve-button:hover {
-    background-color: #ff383b;
-  }
-  
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff9f3; /* Light background for a cute feel */
+}
+
+h1 {
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font */
+  color: #ff6f61; /* Cute color */
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #555; /* Slightly darker for subtitle */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-image {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.details {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.details h3 {
+  color: #ff6f61; /* Color for the details heading */
+  margin-bottom: 10px;
+}
+
+.details p {
+  line-height: 1.5;
+  color: #333; /* Standard text color */
+}
+
+.cost-calculator {
+  border-top: 2px solid #ff6f61; /* Decorative top border */
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.cost-calculator h3 {
+  color: #ff6f61; /* Heading color */
+}
+
+.cost-calculator p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.cost-calculator h4 {
+  font-size: 20px;
+  color: #ff6f61; /* Total price color */
+}
+
+.reserve-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: #ff6f61; /* Button color */
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.reserve-button:hover {
+  background-color: #e55850; /* Darker shade for hover */
+}

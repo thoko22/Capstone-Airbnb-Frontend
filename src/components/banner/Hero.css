@@ -40,13 +40,11 @@
   width: 300px;
 }
 
-.search-button {
-  padding: 10px 20px;
-  border-radius: 20px;
+.search-destination {
   border: none;
-  margin-top: 40px;
   background-color: #ff5a5f;
   color: white;
+  margin-top: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: max-content;
