@@ -1,16 +1,16 @@
 .card-container {
   padding: 40px 20px;
   text-align: left;
-  background-color: #f7f7f7; /* Adjust background color as needed */
+  background-color: #f7f7f7; 
 }
 
 .card-title {
-  font-size: 2.5rem; /* Adjust font size as needed */
+  font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
 .card-items {
-  display: flex;/* Ensure space between cards */
+  display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }

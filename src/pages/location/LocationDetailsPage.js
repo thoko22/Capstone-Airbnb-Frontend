@@ -4,14 +4,13 @@ import axios from 'axios';
 import './LocationDetailsPage.css';
 
 const LocationDetailsPage = () => {
-  const { state } = useLocation(); // Get the state from the Link component
-  const { id } = useParams(); // Get the location ID from the URL params
-  const [location, setLocation] = useState(state?.location); // Initialize with state if available
+  const { state } = useLocation();
+  const { id } = useParams();
+  const [location, setLocation] = useState(state?.location); 
 
     // Fetch location data using the ID if the state is not available
     useEffect(() => {
       if (!state?.location) {
-        // State is not available, fetch the location data from the API
         const fetchLocation = async () => {
           try {
             const response = await axios.get(`http://localhost:5005/api/accommodations/${id}`);

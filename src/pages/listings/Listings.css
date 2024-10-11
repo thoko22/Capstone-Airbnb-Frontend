@@ -92,7 +92,7 @@
 
 .profile-icon {
   font-size: 24px;
-  color: #717171; /* Light gray color */
+  color: #717171;
 }
 
 .listing {
@@ -149,25 +149,25 @@
   object-fit: cover;
 }
 .thumbnail-wrapper {
-  position: relative; /* Allows absolute positioning of the button */
-  width: 100%; /* Ensure it occupies full width of the thumbnail */
-  height: 100%; /* Ensure it occupies full height of the thumbnail */
+  position: relative; 
+  width: 100%; 
+  height: 100%; 
 }
 
 .show-photos-button {
   position: absolute;
-  bottom: 10px; /* Adjust the button's vertical position */
-  right: 10px; /* Adjust the button's horizontal position */
-  background-color: rgba(0, 0, 0, 0.6); /* Dark background for visibility */
+  bottom: 10px; 
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
   border-radius: 20px;
   font-size: 14px;
-  display: flex; /* Allows icon and text to align properly */
+  display: flex;
   align-items: center;
-  gap: 5px; /* Adds spacing between icon and text */
+  gap: 5px;
   transition: background-color 0.3s ease;
 }
 
@@ -176,7 +176,7 @@
 }
 
 .grid-view-icon {
-  font-size: 18px; /* Adjust icon size for better alignment with text */
+  font-size: 18px;
 }
 
 .listing-info {
@@ -235,7 +235,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  width: 95%; /* Ensure it takes the full width */
+  width: 95%;
 }
 
 .guests-selection label {
@@ -320,13 +320,13 @@
 }
 
 .flag-icon {
-  width: 20px; /* Adjust size as needed */
-  height: 20px; /* Adjust size as needed */
-  margin-right: 5px; /* Space between icon and link */
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }
 
 .report-link {
-  color: #007A83; /* Change color for the link */
+  color: #007A83;
   text-decoration: underline;
   font-size: 14px;
   cursor: pointer;
@@ -334,12 +334,10 @@
 }
 
 .report-link:hover {
-  color: #005B5C; /* Darker shade on hover */
+  color: #005B5C; 
 }
-
-/* Negative Amount for Discounts */
 .negative-amount {
-  color: #ff385c; /* Red color for discounts */
+  color: #ff385c; 
 }
 
 .listing-description {
@@ -349,33 +347,33 @@
 
 .features-container {
   display: flex;
-  flex-direction: column; /* Arrange features in a column */
-  gap: 20px; /* Space between each feature */
-  padding: 20px; /* Add padding around the container */
-  background-color: #f7f7f7; /* Light background color */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  flex-direction: column;
+  gap: 20px; 
+  padding: 20px; 
+  background-color: #f7f7f7; 
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .feature {
   display: flex;
-  align-items: center; /* Center icon and text vertically */
-  background-color: #fff; /* White background for each feature */
-  padding: 15px; /* Padding inside each feature */
-  border-radius: 8px; /* Rounded corners for each feature */
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Light shadow for features */
+  align-items: center; 
+  background-color: #fff;
+  padding: 15px; 
+  border-radius: 8px; 
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .feature h2 {
-  margin: 10px; /* Space below the title and some margin on the left */
-  font-size: 18px; /* Title font size */
+  margin: 10px; 
+  font-size: 18px;
   align-self: flex-start;
 }
 
 .feature p {
-  margin: 5px 0 0 10px; /* Remove default margin */
-  font-size: 14px; /* Smaller font for descriptions */
-  color: #555; /* Dark grey color for description */
+  margin: 5px 0 0 10px; 
+  font-size: 14px; 
+  color: #555;
   align-self: flex-start;
 }
 .where-you-sleep {
@@ -387,53 +385,53 @@
   border-radius: 10px;
 }
 .amenities-container {
-  background-color: #fff; /* White background */
-  padding: 20px; /* Padding around the container */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+  background-color: #fff; 
+  padding: 20px; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .amenities-container h2 {
-  margin: 0 0 15px; /* Space below the title */
-  font-size: 24px; /* Title font size */
-  font-weight: bold; /* Bold title */
+  margin: 0 0 15px; 
+  font-size: 24px;
+  font-weight: bold; 
 }
 
 .amenities-list {
-  display: flex; /* Flexbox layout */
-  flex-wrap: wrap; /* Allow items to wrap */
-  gap: 15px; /* Space between items */
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 15px; 
 }
 
 .amenity-item {
-  display: flex; /* Flexbox for icon and name */
-  align-items: center; /* Center items vertically */
-  padding: 10px; /* Padding for each amenity */
-  background-color: #f9f9f9; /* Light grey background for each item */
-  border-radius: 8px; /* Rounded corners for items */
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Light shadow for items */
+  display: flex; 
+  align-items: center;
+  padding: 10px; 
+  background-color: #f9f9f9; 
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .amenity-name {
-  margin-left: 8px; /* Space between icon and text */
-  font-size: 16px; /* Font size for amenity names */
-  color: #333; /* Dark text color */
+  margin-left: 8px;
+  font-size: 16px; 
+  color: #333; 
 }
 
 .show-all-amenities-button {
-  margin-top: 20px; /* Space above button */
-  padding: 10px 20px; /* Padding for button */
-  background-color: #ff385c; /* Airbnb red */
-  color: #fff; /* White text */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Rounded corners for button */
-  cursor: pointer; /* Pointer cursor */
-  display: flex; /* Flexbox for button */
-  align-items: center; /* Center icon and text vertically */
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff385c;
+  color: #fff;
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+  display: flex; 
+  align-items: center; 
 }
 
 .show-all-amenities-button:hover {
-  background-color: #e0294d; /* Darker red on hover */
+  background-color: #e0294d; 
 }
 .calendar-section {
   max-width: 700px;

@@ -15,17 +15,18 @@ const LocationPage = () => {
         const response = await axios.get(
           "http://localhost:5005/api/accommodations"
         );
-        setLocations(response.data); // Set the locations state with data from the response
+        setLocations(response.data);
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
     };
 
     fetchLocations();
-  }, []); // Empty dependency array means it runs once when component mounts
+  }, []);
 
-  const handleImageClick = () => {
-    navigate('/listings');
+  const handleImageClick = (location) => {
+    // Pass location details to the Listings page using state
+    navigate('/listings', { state: { id: location._id, title: location.title, price: location.price } });
   };
 
   return (
@@ -40,8 +41,8 @@ const LocationPage = () => {
                 src={`http://localhost:5005/${location.images[0]}`}
                 alt={location.title}
                 className="location-image"
-                onClick={() => handleImageClick(location)} // Call the click handler with location data
-                style={{ cursor: 'pointer' }} // Indicate clickable image
+                onClick={() => handleImageClick(location)} 
+                style={{ cursor: 'pointer' }}
               />
               <div className="location-card-content">
                 <h2>{location.location}</h2>

@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Listings.css";
-import MenuIcon from "@mui/icons-material/Menu";
-import LanguageIcon from "@mui/icons-material/Language";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { IconButton } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import GridViewIcon from "@mui/icons-material/GridView";
@@ -26,18 +23,80 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Reviews from "./Reviews";
 
 const Listings = () => {
-  // State for guests count
   const [guests, setGuests] = useState(1);
-    const location = useLocation();
-  const { location: locationData } = location.state || {}; // Get location data from state
+  const [locationData, setLocationData] = useState(null);
+  const [isLoggedIn] = useState(true); // Add authentication state
+  const location = useLocation();
+  const listingId = location.state?.id;
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { accommodationId } = useParams();
 
+  // Fetch listing data from API
+  useEffect(() => {
+    const fetchListingData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5005/api/accommodations/${listingId}`
+        );
+        setLocationData(response.data);
+      } catch (error) {
+        console.error("Error fetching listing data:", error);
+      }
+    };
 
-  // Function to handle increment and decrement of guests
+    if (listingId) {
+      fetchListingData();
+    }
+  }, [listingId]);
+
   const handleGuestChange = (action) => {
-    if (action === "increment") {
-      setGuests((prevGuests) => prevGuests + 1);
-    } else if (action === "decrement" && guests > 1) {
-      setGuests((prevGuests) => prevGuests - 1);
+    setGuests((prevGuests) =>
+      action === "increment" ? prevGuests + 1 : Math.max(prevGuests - 1, 1)
+    );
+  };
+
+  const handleReservation = async () => {
+    if (!isLoggedIn) {
+      alert("Please log in to make a reservation.");
+      return;
+    }
+
+    if (!checkInDate || !checkOutDate || guests < 1) {
+      setErrorMessage(
+        "Please fill in all fields and ensure at least one guest is selected."
+      );
+      return;
+    }
+
+    const reservationDetails = {
+      checkIn: checkInDate,
+      checkOut: checkOutDate,
+      guests: guests,
+      totalPrice: locationData?.fees?.total || 0
+    };
+
+    try {
+      const response = await fetch(`http://localhost:5005/api/reservations`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reservationDetails)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to make reservation. Please try again later.");
+      }
+
+      alert("Reservation made successfully!");
+      setCheckInDate("");
+      setCheckOutDate("");
+      setGuests(1);
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage(error.message || "An error occurred. Please try again.");
     }
   };
 
@@ -54,47 +113,41 @@ const Listings = () => {
     { name: "Bicycles", icon: <BicycleIcon /> }
   ];
 
+  const [weeklyDiscount, setWeeklyDiscount] = useState(0);
+  const [cleaningFee, setCleaningFee] = useState(0);
+  const [serviceFee, setServiceFee] = useState(0);
+  const [occupancyTaxes, setOccupancyTaxes] = useState(0);
+  const total =
+    (locationData?.price || 0) * 7 -
+    weeklyDiscount +
+    cleaningFee +
+    serviceFee +
+    occupancyTaxes;
+
+  useEffect(() => {
+    fetch(`http://localhost:5005/api/accommodations/${accommodationId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setWeeklyDiscount(data.location.weeklyDiscount || 0);
+        setCleaningFee(data.location.cleaningFee || 0);
+        setServiceFee(data.location.serviceFee || 0);
+        setOccupancyTaxes(data.location.occupancyTaxes || 0);
+      })
+      .catch((error) => console.error("Error fetching fee details:", error));
+  }, [accommodationId]);
+
   return (
     <div>
-      <div className="header-container">
-        <div className="header-left">
-          <img
-            src="https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png"
-            alt="Airbnb Logo"
-            className="logo"
-          />
-        </div>
-
-        <div className="header-text">
-          <p>Places to stay</p>
-          <p>Experiences</p>
-          <p>Online Experiences</p>
-        </div>
-
-        <div className="header-right">
-          <span className="Become-host">Become a Host</span>
-          <IconButton className="globe-icon">
-            <LanguageIcon />
-          </IconButton>
-          <div className="menu-profile">
-            <IconButton>
-              <MenuIcon className="menu-icon" />
-            </IconButton>
-            <IconButton>
-              <AccountCircleIcon className="profile-icon" />
-            </IconButton>
-          </div>
-        </div>
-      </div>
-
       <div className="listing">
         <section className="listing-header">
           <div className="listing-title">
-            <h1>Bordeaux Getaway</h1>
+            <h1>{locationData?.title}</h1>
             <div className="listing-rating">
               <span className="details">
                 ⭐ 5.0 . <Link>7 reviews</Link> · Superhost ·{" "}
-                <Link>Bordeaux, France</Link>{" "}
+                <a href={locationData ? `/location/${locationData.id}` : "#"}>
+                  {locationData?.location}
+                </a>
               </span>
               <span className="actions">
                 <IosShareIcon /> Share <FavoriteBorderIcon /> Save{" "}
@@ -103,34 +156,38 @@ const Listings = () => {
           </div>
 
           <div className="listing-gallery">
-            <img
-              src="https://www.travelandleisure.com/thmb/1XTnpdZH4sBCj8ynezw5xE9A-IY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/TAL-header-living-room-PALMBEACHBNB0223-b6b01c9c358b4247bfcf2ca164fb3484.jpg"
-              alt="main room"
-              className="main-room"
-            />
-            <div className="thumbnail-images">
-              <img
-                src="https://a0.muscache.com/im/pictures/e585e943-e6b0-4fae-aa98-cc98cf9295cb.jpg?im_w=720"
-                alt="second room"
-              />
-              <img
-                src="https://community.withairbnb.com/t5/image/serverpage/image-id/36640iBD190FA9A76477F5/image-size/large/is-moderation-mode/true?v=v2&px=999"
-                alt="kitchen"
-              />
-              <img
-                src="https://community.withairbnb.com/t5/image/serverpage/image-id/69430iB7A56F890F3B1DBA/image-size/large/is-moderation-mode/true?v=v2&px=999"
-                alt="bathroom"
-              />
-              <div className="thumbnail-wrapper">
+            {locationData?.images?.length > 0 && (
+              <>
                 <img
-                  src="https://news.airbnb.com/wp-content/uploads/sites/4/2023/05/6446bd35-6041-441d-98d3-ac8bf5b28b37-2.jpeg?w=1024"
-                  alt="view outside"
+                  src={`http://localhost:5005/${locationData.images[0]}`}
+                  alt="main room"
+                  className="main-room"
                 />
-                <button className="show-photos-button">
-                  <GridViewIcon className="grid-view-icon" /> Show All Photos
-                </button>
-              </div>
-            </div>
+
+                <div className="thumbnail-images">
+                  {locationData.images.slice(1, 4).map((image, index) => (
+                    <img
+                      key={index}
+                      src={`http://localhost:5005/${image}`}
+                      alt={`image-${index}`}
+                    />
+                  ))}
+
+                  {locationData.images.length > 4 && (
+                    <div className="thumbnail-wrapper">
+                      <img
+                        src={`http://localhost:5005/${locationData.images[4]}`}
+                        alt="view outside"
+                      />
+                      <button className="show-photos-button">
+                        <GridViewIcon className="grid-view-icon" /> Show All
+                        Photos
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </section>
 
@@ -202,67 +259,139 @@ const Listings = () => {
                 Show all 37 amenities <ExpandMoreIcon />
               </button>
             </div>
-            <hr/>
+            <hr />
             <section class="calendar-section">
-  <div class="header">
-    <h2>7 nights in New York</h2>
-    <p>Feb 19, 2022 - Feb 26, 2022</p>
-  </div>
+              <div class="header">
+                <h2>7 nights in New York</h2>
+                <p>Feb 19, 2022 - Feb 26, 2022</p>
+              </div>
 
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <span class="arrow">&#60;</span>
-      <h3>February 2022</h3>
-      <h3>March 2022</h3>
-      <span class="arrow">&#62;</span>
-    </div>
+              <div class="calendar-container">
+                <div class="calendar-header">
+                  <span class="arrow">&#60;</span>
+                  <h3>February 2022</h3>
+                  <h3>March 2022</h3>
+                  <span class="arrow">&#62;</span>
+                </div>
 
-    <div class="calendars">
-      <div class="month">
-        <div class="days">
-          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-        </div>
-        <div class="dates">
-          <span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span>1</span>
-          <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
-          <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
-          <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span>
-          <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
-        </div>
-      </div>
+                <div class="calendars">
+                  <div class="month">
+                    <div class="days">
+                      <span>Su</span>
+                      <span>Mo</span>
+                      <span>Tu</span>
+                      <span>We</span>
+                      <span>Th</span>
+                      <span>Fr</span>
+                      <span>Sa</span>
+                    </div>
+                    <div class="dates">
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span>1</span>
+                      <span>2</span>
+                      <span>3</span>
+                      <span>4</span>
+                      <span>5</span>
+                      <span>6</span>
+                      <span>7</span>
+                      <span>8</span>
+                      <span>9</span>
+                      <span>10</span>
+                      <span>11</span>
+                      <span>12</span>
+                      <span>13</span>
+                      <span>14</span>
+                      <span>15</span>
+                      <span>16</span>
+                      <span>17</span>
+                      <span>18</span>
+                      <span>19</span>
+                      <span>20</span>
+                      <span>21</span>
+                      <span>22</span>
+                      <span>23</span>
+                      <span>24</span>
+                      <span>25</span>
+                      <span>26</span>
+                      <span>27</span>
+                      <span>28</span>
+                    </div>
+                  </div>
 
-      <div class="month">
-        <div class="days">
-          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-        </div>
-        <div class="dates">
-          <span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span>1</span><span>2</span><span>3</span>
-          <span class="selected">4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="selected">10</span>
-          <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
-          <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
-          <span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
-        </div>
-      </div>
-    </div>
-  </div>
+                  <div class="month">
+                    <div class="days">
+                      <span>Su</span>
+                      <span>Mo</span>
+                      <span>Tu</span>
+                      <span>We</span>
+                      <span>Th</span>
+                      <span>Fr</span>
+                      <span>Sa</span>
+                    </div>
+                    <div class="dates">
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span class="empty"></span>
+                      <span>1</span>
+                      <span>2</span>
+                      <span>3</span>
+                      <span class="selected">4</span>
+                      <span>5</span>
+                      <span>6</span>
+                      <span>7</span>
+                      <span>8</span>
+                      <span>9</span>
+                      <span class="selected">10</span>
+                      <span>11</span>
+                      <span>12</span>
+                      <span>13</span>
+                      <span>14</span>
+                      <span>15</span>
+                      <span>16</span>
+                      <span>17</span>
+                      <span>18</span>
+                      <span>19</span>
+                      <span>20</span>
+                      <span>21</span>
+                      <span>22</span>
+                      <span>23</span>
+                      <span>24</span>
+                      <span>25</span>
+                      <span>26</span>
+                      <span>27</span>
+                      <span>28</span>
+                      <span>29</span>
+                      <span>30</span>
+                      <span>31</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  <div class="footer">
-    <CalendarMonthIcon className="month-icon" />
-    <button class="clear-dates">Clear dates</button>
-  </div>
-</section>
+              <div class="footer">
+                <CalendarMonthIcon className="month-icon" />
+                <button class="clear-dates">Clear dates</button>
+              </div>
+            </section>
 
-            <hr/>
+            <hr />
           </div>
 
           {/* Pricing Box Section */}
           <div className="pricing-box">
             <div className="pricing-header">
-              <h3>$75 / night</h3>
+              <h3>${locationData?.price} / night</h3>
               <p>
-                7 nights: <strong>$701</strong>
+                7 nights: <strong>${(locationData?.price || 0) * 7}</strong>
               </p>
             </div>
+
             <div className="reservation-fields">
               <div className="checkin-checkout">
                 <div className="checkin">
@@ -270,6 +399,8 @@ const Listings = () => {
                   <input
                     type="date"
                     className="date-input"
+                    value={checkInDate}
+                    onChange={(e) => setCheckInDate(e.target.value)}
                     placeholder="Add date"
                   />
                 </div>
@@ -278,18 +409,20 @@ const Listings = () => {
                   <input
                     type="date"
                     className="date-input"
+                    value={checkOutDate}
+                    onChange={(e) => setCheckOutDate(e.target.value)}
                     placeholder="Add date"
                   />
                 </div>
               </div>
 
-              {/* Guests Section with Increment and Decrement */}
               <div className="guests-selection">
                 <label>Guests</label>
                 <div className="guest-counter">
                   <button
                     className="guest-button"
                     onClick={() => handleGuestChange("decrement")}
+                    disabled={guests <= 1}
                   >
                     -
                   </button>
@@ -297,43 +430,48 @@ const Listings = () => {
                   <button
                     className="guest-button"
                     onClick={() => handleGuestChange("increment")}
+                    disabled={guests >= locationData?.guests}
                   >
                     +
                   </button>
                 </div>
               </div>
+
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
-            <button className="reserve-button">Reserve</button>
+
+            <button className="reserve-button" onClick={handleReservation}>
+              Reserve
+            </button>
             <p className="charge-notice">You won't be charged yet.</p>
+
             <ul className="fee-details">
-              <li>
-                Weekly discount: <span className="negative-amount">-$28</span>
-              </li>
-              <li>Cleaning fee: $62</li>
-              <li>Service fee: $83</li>
-              <li>Occupancy taxes and fees: $29</li>
+              <li>Weekly Discount: ${weeklyDiscount}</li>
+              <li>Cleaning fee: ${cleaningFee}</li>
+              <li>Service fee: ${serviceFee}</li>
+              <li>Occupancy taxes and fees: ${occupancyTaxes}</li>
             </ul>
+
             <div className="total-amount">
               <p>
-                Total: <strong>$174</strong>
+                Total: <strong>${total}</strong>
               </p>
             </div>
-            <hr/>
-            {/* Report this listing link */}
+
+            <hr />
+
             <div className="report-listing">
-            <FlagIcon />
-            <Link to="#" className="report-link">
-              Report this listing
-            </Link>
-          </div>
+              <FlagIcon />
+              <Link to="#" className="report-link">
+                Report this listing
+              </Link>
+            </div>
           </div>
         </section>
-        <hr/>
-        <Reviews/>
+        <hr />
+        <Reviews />
       </div>
-
     </div>
-    
   );
 };
 

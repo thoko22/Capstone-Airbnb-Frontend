@@ -34,8 +34,10 @@ const AppRoutes = () => {
   // Determine if the header should be displayed based on the current route
   const showHeader = 
   location.pathname === "/" || 
-  location.pathname.startsWith("/locations") || 
-  location.pathname.startsWith("/location-details");
+  location.pathname.startsWith("/locations") ||
+  location.pathname.startsWith("/location-details") ||
+  location.pathname.startsWith("/listings") ||
+  location.pathname.startsWith("/create-listing");
 
   return (
     <>

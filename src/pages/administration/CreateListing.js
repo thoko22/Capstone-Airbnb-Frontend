@@ -1,7 +1,7 @@
 import "./CreateListing.css";
 import React, { useEffect } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+// import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -12,7 +12,6 @@ const CreateListing = () => {
     const listingForm = document.getElementById("listingForm");
     const cancelButton = document.getElementById("cancelButton");
 
-    // Handle Upload Image button functionality
     uploadButton.addEventListener("click", () => {
       imageUpload.click();
     });
@@ -28,7 +27,7 @@ const CreateListing = () => {
       document.getElementById("uploaded-images").value = fileNames;
     });
 
-    // Handle Cancel button functionality 
+    // Handle Cancel button functionality
     cancelButton.addEventListener("click", () => {
       listingForm.reset();
       document.getElementById("uploaded-images").value = "";
@@ -37,24 +36,17 @@ const CreateListing = () => {
     // Handle Create button functionality with submission to backend
     listingForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      createListing();
+      createListing(); // Call the createListing function
     });
 
     return () => {
       uploadButton.removeEventListener("click", () => {
         imageUpload.click();
       });
-      imageUpload.removeEventListener("change", (event) => {
-        const files = event.target.files;
-        let fileNames = "";
-
-        for (let i = 0; i < files.length; i++) {
-          fileNames += files[i].name + "\n";
-        }
-
-        document.getElementById("uploaded-images").value = fileNames;
+      imageUpload.removeEventListener("change", () => {
+        // Clean up the change event
       });
-      listingForm.removeEventListener("submit", createListing);
+      listingForm.removeEventListener("submit", createListing); // Clean up event listener
       cancelButton.removeEventListener("click", () => {
         listingForm.reset();
         document.getElementById("uploaded-images").value = "";
@@ -65,28 +57,25 @@ const CreateListing = () => {
   const createListing = () => {
     // Gather form data
     const listingName = document.getElementById("listing-name").value;
-    const rooms = document.getElementById("rooms").value;
-    const baths = document.getElementById("baths").value;
+    const bedrooms = document.getElementById("rooms").value;
+    const bathrooms = document.getElementById("baths").value;
+    const guests = document.getElementById("guests").value; 
+    const host = document.getElementById("host").value; 
+    const title = document.getElementById("title").value;
     const type = document.getElementById("type").value;
     const location = document.getElementById("location").value;
     const description = document.getElementById("description").value;
     const amenities = document.getElementById("amenities").value;
     const images = document.getElementById("imageUpload").files;
+    const price = document.getElementById("price").value;
 
-    if (
-      !listingName ||
-      !rooms ||
-      !baths ||
-      !type ||
-      !location ||
-      !description
-    ) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+  if (!listingName || !bedrooms || !bathrooms || !guests || !host || !title || !type || !location || !description || !price) {
+    alert("Please fill in all required fields.");
+    return;
+  }
 
     // Validate that rooms and baths are positive integers
-    if (rooms < 1 || baths < 1) {
+    if (bedrooms < 1 || bathrooms < 1) {
       alert("Rooms and baths must be at least 1.");
       return;
     }
@@ -94,24 +83,43 @@ const CreateListing = () => {
     // Prepare form data to send to the backend
     let formData = new FormData();
     formData.append("listingName", listingName);
-    formData.append("rooms", rooms);
-    formData.append("baths", baths);
+    formData.append("bedrooms", bedrooms);
+    formData.append("bathrooms", bathrooms);
+    formData.append("guests", guests);
+    formData.append("host", host); 
+    formData.append("title", title);
     formData.append("type", type);
     formData.append("location", location);
     formData.append("description", description);
     formData.append("amenities", amenities);
+    formData.append("price", price);
 
     // Append images to FormData
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
 
-    // Send data to the backend
-    fetch("https://your-backend-api-url.com/api/listings", {
+    // Retrieve the token from localStorage
+    const token = localStorage.getItem("token");
+
+    // Send data to the backend with the token in the Authorization header
+    fetch("http://localhost:5005/api/accommodations", {
       method: "POST",
-      body: formData
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          // Log the response to understand the error
+          return response.json().then(err => {
+            console.error("Backend error:", err);
+            throw new Error(err.message || "Failed to create listing");
+          });
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Listing created successfully:", data);
         alert("Listing created successfully!");
@@ -120,13 +128,14 @@ const CreateListing = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Error creating listing.");
+        alert("Error creating listing: " + error.message);
       });
+    
   };
 
   return (
     <>
-      <div className="header-admin">
+      {/* <div className="header-admin">
         <img
           src="https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png"
           alt="logo"
@@ -138,7 +147,7 @@ const CreateListing = () => {
             <AccountCircleIcon />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="button-container">
         <Button variant="outlined" component={Link} to="/view-reservations">
           View Reservation
@@ -151,89 +160,121 @@ const CreateListing = () => {
         </Button>
       </div>
       <hr />
-      
-      <h2>Create Listing</h2>
-      <div className="container">
-        <form className="create-listing-form" id="listingForm">
-          <div className="form-group">
-            <label htmlFor="listing-name">Listing Name</label>
-            <input type="text" id="listing-name" name="listingName" required />
-          </div>
 
-          <div className="form-group row">
-            <div>
-              <label htmlFor="rooms">Rooms</label>
-              <input type="number" id="rooms" name="rooms" min="1" required />
-            </div>
-            <div>
-              <label htmlFor="baths">Baths</label>
-              <input type="number" id="baths" name="baths" min="1" required />
-            </div>
-            <div>
-              <label htmlFor="type">Type</label>
-              <select id="type" name="type" required>
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="villa">Villa</option>
-              </select>
-            </div>
-          </div>
+    <h2>Create Listing</h2>
+    <div className="container">
+      <form className="create-listing-form" id="listingForm">
+        {/* Listing Name */}
+        <div className="form-group">
+          <label htmlFor="listing-name">Listing Name</label>
+          <input type="text" id="listing-name" name="listingName" required />
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="location">Location</label>
-            <input type="text" id="location" name="location" required />
+        {/* Bedrooms and Bathrooms */}
+        <div className="form-group row">
+          <div>
+            <label htmlFor="rooms">Bedrooms</label>
+            <input type="number" id="rooms" name="rooms" min="1" required />
           </div>
+          <div>
+            <label htmlFor="baths">Bathrooms</label>
+            <input type="number" id="baths" name="baths" min="1" required />
+          </div>
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <textarea id="description" name="description" required></textarea>
-          </div>
+        {/* Guests */}
+        <div className="form-group">
+          <label htmlFor="guests">Guests</label>
+          <input type="number" id="guests" name="guests" min="1" required />
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="amenities">Amenities</label>
-            <input type="text" id="amenities" name="amenities" />
-            <button type="button" className="add-btn">
-              Add
-            </button>
-          </div>
+        {/* Host */}
+        <div className="form-group">
+          <label htmlFor="host">Host</label>
+          <input type="text" id="host" name="host" required />
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="images">Images</label>
-            <input
-              type="file"
-              id="imageUpload"
-              name="images"
-              multiple
-              accept="image/*"
-              required
-            />
-            <button className="upload" type="button" id="uploadButton">
-              Upload Image
-            </button>
-          </div>
+        {/* Title */}
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input type="text" id="title" name="title" required />
+        </div>
 
-          <div className="form-group">
-            <textarea
-              id="uploaded-images"
-              placeholder="Uploaded images will appear here..."
-              readOnly
-            ></textarea>
-          </div>
+        {/* Price */}
+        <div className="form-group">
+          <label htmlFor="price">Price</label>
+          <input type="number" id="price" name="price" required />
+        </div>
 
-          {/* Form buttons */}
-          <div className="form-buttons">
-            <button className="create" type="submit" id="createButton">
-              Create
-            </button>
-            <button className="cancel" type="button" id="cancelButton">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-      <hr />
-    </>
-  );
+        {/* Type */}
+        <div className="form-group">
+          <label htmlFor="type">Type</label>
+          <select id="type" name="type" required>
+            <option value="apartment">Apartment</option>
+            <option value="house">House</option>
+            <option value="villa">Villa</option>
+          </select>
+        </div>
+
+        {/* Location */}
+        <div className="form-group">
+          <label htmlFor="location">Location</label>
+          <input type="text" id="location" name="location" required />
+        </div>
+
+        {/* Description */}
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
+
+        {/* Amenities */}
+        <div className="form-group">
+          <label htmlFor="amenities">Amenities</label>
+          <input type="text" id="amenities" name="amenities" />
+          <button type="button" className="add-btn">
+            Add
+          </button>
+        </div>
+
+        {/* Images */}
+        <div className="form-group">
+          <label htmlFor="images">Images</label>
+          <input
+            type="file"
+            id="imageUpload"
+            name="images"
+            multiple
+            accept="image/*"
+            required
+          />
+          <button className="upload" type="button" id="uploadButton">
+            Upload Image
+          </button>
+        </div>
+
+        <div className="form-group">
+          <textarea
+            id="uploaded-images"
+            placeholder="Uploaded images will appear here..."
+            readOnly
+          ></textarea>
+        </div>
+
+        {/* Form buttons */}
+        <div className="form-buttons">
+          <button className="create" type="submit" id="createButton">
+            Create
+          </button>
+          <button className="cancel" type="button" id="cancelButton">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <hr />
+  </>
+);
 };
 
 export default CreateListing;

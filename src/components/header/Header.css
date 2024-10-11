@@ -204,33 +204,33 @@
 .guest-category p {
   margin: 0;
   font-size: 14px;
-  color: #717171;
+  color: #ff69b4;
 }
 
 .guest-input {
-  width: 40px; /* Increase width for better visibility */
+  width: 40px; 
   text-align: center;
   border: none;
-  font-size: 16px; /* Increase font size */
+  font-size: 16px; 
   padding: 5px;
-  margin: 0 5px; /* Space between input and buttons */
+  margin: 0 5px; 
 }
 
 .guest-input:read-only {
   background: #f7f7f7;
 }
 
-.guest-button {
-  background-color: #ff7779;
-  color: #fff;
+.guest-buttons {
+  background-color: lightpink;
+  color: white important!;
   border: none;
-  padding: 5px 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-radius: 50px;
   font-size: 18px;
+  max-width: fit-content;
 }
 
 .guest-button:hover {
@@ -239,7 +239,7 @@
 
 
 .search-icon-container {
-  background-color: #ff385c; /* Airbnb red */
+  background-color: #ff385c;
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
@@ -297,13 +297,13 @@
   .search-checkin,
   .search-checkout,
   .search-who {
-    margin-right: 10px; /* Reduce margin */
+    margin-right: 10px; 
   }
 }
 
 @media (max-width: 768px) {
   .header-search {
-    flex-wrap: wrap; /* Allow wrapping */
+    flex-wrap: wrap; 
     padding: 15px;
   }
 
@@ -311,15 +311,15 @@
   .search-checkin,
   .search-checkout,
   .search-who {
-    margin-right: 0; /* Remove right margin */
-    width: 100%; /* Full width for all items */
-    margin-bottom: 10px; /* Add spacing between stacked items */
+    margin-right: 0; 
+    width: 100%; 
+    margin-bottom: 10px; 
   }
 
   .search-input-location,
   .date-picker,
   .search-button {
-    width: 100%; /* Full width for inputs */
+    width: 100%; 
   }
 
   .search-button {
@@ -329,79 +329,73 @@
 
 @media (max-width: 576px) {
   .header-search {
-    flex-direction: column; /* Stack all elements */
+    flex-direction: column;
     align-items: stretch;
   }
 
   .search-icon-container {
-    width: 100%; /* Full width */
-    margin-top: 15px; /* Add margin at the top */
-    padding: 15px; /* Increase padding */
-    border-radius: 30px; /* Adjust border radius */
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px; 
+    border-radius: 30px; 
   }
 
   .search-Icon {
-    font-size: 24px; /* Increase icon size */
+    font-size: 24px;
   }
 
   .guest-popup {
-    width: 90%; /* Make the popup wider on mobile */
-    left: 5%; /* Center the popup */
+    width: 90%; 
+    left: 5%; 
   }
 }
-/* Dropdown Container Styles */
 .search-where {
-  position: relative; /* Position relative for dropdown positioning */
+  position: relative; 
 }
 
-/* Dropdown List Styles */
 .location-dropdown {
   position: absolute;
-  top: 100%; /* Position below the input */
+  top: 100%; 
   left: 0;
-  right: 0; /* Full width */
-  background-color: #fff; /* White background for dropdown */
-  border: 1px solid #ff99cc; /* Light gray border */
-  border-radius: 4px; /* Rounded corners */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index: 1000; /* Ensure dropdown is above other elements */
-  max-height: 200px; /* Optional: Limit height */
-  overflow-y: auto; /* Scroll if content exceeds max-height */
+  right: 0; 
+  background-color: #fff; 
+  border: 1px solid #ff99cc; 
+  border-radius: 4px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 200px; 
+  overflow-y: auto; 
   width: max-content;
 }
 
-/* Individual Option Styles */
 .location-option {
-  padding: 10px; /* Padding for each option */
-  cursor: pointer; /* Show pointer cursor on hover */
-  transition: background-color 0.2s; /* Smooth transition for hover effect */
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
   color: #6a6a6a;
 }
 
-/* Hover Effect for Options */
 .location-option:hover {
-  background-color: #ffe6f2; /* Light gray background on hover */
+  background-color: #ffe6f2;
 }
 
-/* Optional: First Option Styling */
 .location-dropdown .location-option:first-child {
-  font-weight: bold; /* Make the first option bold (e.g., "All Locations") */
+  font-weight: bold;
 }
 
-/* Optional: Remove Bottom Border for Last Option */
 .location-dropdown .location-option:last-child {
-  border-bottom: none; /* Remove border from the last option if using borders */
+  border-bottom: none;
 }
 .search-input-location input {
-  border: 1px solid #ff99cc; /* Light pink border for input */
+  border: 1px solid #ff99cc;
   padding: 10px;
   border-radius: 10px;
   width: 80%;
-  color: #6a6a6a; /* Dark gray text color */
-  background-color: #fff; /* Ensure the background is white */
+  color: #6a6a6a; 
+  background-color: #fff;
 }
 .search-input-location input:focus {
-  outline: none; /* Remove default outline */
-  border-color: #ff66b3; /* Darker pink on focus */
-  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* Subtle shadow on focus */
+  outline: none;
+  border-color: #ff66b3;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
 }

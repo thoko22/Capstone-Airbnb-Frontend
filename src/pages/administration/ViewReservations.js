@@ -1,32 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ViewReservations.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-
-const reservationsData = [
-  {
-    bookedBy: "Johann Coetzee",
-    property: "Property 1",
-    checkIn: "19/06/2024",
-    checkOut: "24/06/2024"
-  },
-  {
-    bookedBy: "Asif Hassam",
-    property: "Property 2",
-    checkIn: "19/06/2024",
-    checkOut: "19/06/2024"
-  },
-  {
-    bookedBy: "Kago Kola",
-    property: "Property 1",
-    checkIn: "25/06/2024",
-    checkOut: "30/06/2024"
-  }
-];
+import axios from "axios";
 
 const ViewReservations = () => {
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch reservations from the backend
+  const fetchReservations = async () => {
+    try {
+      const response = await axios.get("http://localhost:5005/api/reservations/user", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Use token stored in local storage
+        },
+      });
+      setReservations(response.data);
+    } catch (err) {
+      setError(err.response ? err.response.data.message : "Error fetching reservations");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  const handleDelete = async (id) => {
+    console.log("Deleting reservation with ID:", id);
+    try {
+      await axios.delete(`http://localhost:5005/api/reservations/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure token is correctly retrieved
+        },
+      });
+      
+      setReservations((prev) => prev.filter((reservation) => reservation._id !== id));
+    } catch (err) {
+      setError(err.response ? err.response.data.message : "Error deleting reservation");
+    }
+  };
+
   return (
     <div>
       {/* Header */}
@@ -59,102 +78,45 @@ const ViewReservations = () => {
       {/* Reservations Table */}
       <div className="reservations-container">
         <h2>My Reservations</h2>
-        <table className="reservations-table">
-          <thead>
-            <tr>
-              <th>Booked by</th>
-              <th>Property</th>
-              <th>Check-in</th>
-              <th>Check-out</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reservationsData.map((reservation, index) => (
-              <tr key={index}>
-                <td>{reservation.bookedBy}</td>
-                <td>{reservation.property}</td>
-                <td>{reservation.checkIn}</td>
-                <td>{reservation.checkOut}</td>
-                <td>
-                  <button className="delete-button">Delete</button>
-                </td>
+        {loading ? (
+          <p>Loading reservations...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <table className="reservations-table">
+            <thead>
+              <tr>
+                <th>Booked by</th>
+                <th>Property</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {reservations.map((reservation) => (
+                <tr key={reservation._id}>
+                  <td>{reservation?.body?.name || "User Name"}</td>
+                  <td>{reservation?.accommodation?.title || "Property Title"}</td>
+                  <td>{reservation?.checkIn ? new Date(reservation.checkIn).toLocaleDateString() : "N/A"}</td>
+                  <td>{reservation?.checkOut ? new Date(reservation.checkOut).toLocaleDateString() : "N/A"}</td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(reservation._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
+
 export default ViewReservations;
 
-
-
-// // src/components/ViewReservations.js
-// import React, { useEffect, useState } from "react";
-
-// const ViewReservations = () => {
-//   const [reservations, setReservations] = useState([]);
-
-//   useEffect(() => {
-//     // Fetch reservations from your backend when the component mounts
-//     fetchReservations();
-//   }, []);
-
-//   const fetchReservations = async () => {
-//     try {
-//       const response = await fetch("https://your-backend-api-url.com/api/reservations");
-//       const data = await response.json();
-//       setReservations(data);
-//     } catch (error) {
-//       console.error("Error fetching reservations:", error);
-//     }
-//   };
-
-//   const handleDelete = async (reservationId) => {
-//     if (window.confirm("Are you sure you want to delete this reservation?")) {
-//       try {
-//         await fetch(`https://your-backend-api-url.com/api/reservations/${reservationId}`, {
-//           method: "DELETE",
-//         });
-//         // Remove the deleted reservation from state
-//         setReservations(reservations.filter(reservation => reservation.id !== reservationId));
-//         alert("Reservation deleted successfully.");
-//       } catch (error) {
-//         console.error("Error deleting reservation:", error);
-//         alert("Error deleting reservation.");
-//       }
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>My Reservations</h2>
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Listing Name</th>
-//             <th>Check-in Date</th>
-//             <th>Check-out Date</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {reservations.map((reservation) => (
-//             <tr key={reservation.id}>
-//               <td>{reservation.listingName}</td>
-//               <td>{new Date(reservation.checkIn).toLocaleDateString()}</td>
-//               <td>{new Date(reservation.checkOut).toLocaleDateString()}</td>
-//               <td>
-//                 <button onClick={() => handleDelete(reservation.id)}>Delete</button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default ViewReservations;
