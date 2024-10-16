@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Admin.css";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+// import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -27,10 +27,10 @@ const Admin = () => {
 
   const deleteListing = async (id) => {
     try {
-      const token = localStorage.getItem("token"); // Example: Get token from localStorage
+      const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5005/api/accommodations/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Include token in Authorization header
+          Authorization: `Bearer ${token}`,
         },
       });
       console.log("Listing deleted successfully");
@@ -40,13 +40,12 @@ const Admin = () => {
     }
   };
   
-
   const handleEditClick = (listing) => {
     navigate("/create-listing", { state: { listing } });
   };
   return (
     <>
-      <div className="header-admin">
+      {/* <div className="header-admin">
         <img
           src="https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png"
           alt="logo"
@@ -58,7 +57,7 @@ const Admin = () => {
             <AccountCircleIcon />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="button-container">
         <Button variant="outlined" component={Link} to="/view-reservations">
           View Reservation

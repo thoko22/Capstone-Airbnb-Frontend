@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ViewReservations.css";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+// import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -14,7 +14,7 @@ const ViewReservations = () => {
   // Fetch reservations from the backend
   const fetchReservations = async () => {
     try {
-      const response = await axios.get("http://localhost:5005/api/reservations/user", {
+      const response = await axios.get("http://localhost:5005/api/reservations", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // Use token stored in local storage
         },
@@ -49,7 +49,7 @@ const ViewReservations = () => {
   return (
     <div>
       {/* Header */}
-      <div className="header-admin">
+      {/* <div className="header-admin">
         <img
           src="https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png"
           alt="logo"
@@ -61,7 +61,7 @@ const ViewReservations = () => {
             <AccountCircleIcon />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="button-container">
         <Button variant="outlined" component={Link} to="/view-reservations">
           View Reservation

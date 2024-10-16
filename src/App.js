@@ -15,15 +15,20 @@ import Admin from "./pages/administration/Admin";
 import Listings from "./pages/listings/Listings";
 import CreateListing from "./pages/administration/CreateListing";
 import ViewReservations from "./pages/administration/ViewReservations";
+import { AuthProvider } from "./components/login/AuthContext";
+import Login from "./components/login/Login";
+import HostLogin from "./components/login/HostLogin";
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <AppRoutes />
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <AppRoutes />
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 };
 
@@ -37,7 +42,9 @@ const AppRoutes = () => {
   location.pathname.startsWith("/locations") ||
   location.pathname.startsWith("/location-details") ||
   location.pathname.startsWith("/listings") ||
-  location.pathname.startsWith("/create-listing");
+  location.pathname.startsWith("/create-listing") ||
+  location.pathname.startsWith("/admin") ||
+  location.pathname.startsWith("/view-reservations");
 
   return (
     <>
@@ -56,12 +63,18 @@ const AppRoutes = () => {
           }
         />
         <Route path="/search" element={<SearchResult />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/listings" element={<Listings />} />
-        <Route path="/create-listing" element={<CreateListing />} />
-        <Route path="/view-reservations" element={<ViewReservations />} />
         <Route path="/locations" element={<LocationPage />} />
         <Route path="/location-details/:id" element={<LocationDetailsPage />} />
+        <Route path="/listings" element={<Listings />} />
+        <Route path="/view-reservations" element={<ViewReservations />} />
+
+
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/create-listing" element={<CreateListing />} />
+
+        {/* Login Routes */}
+        <Route path="/user-login" element={<Login />} />
+        <Route path="/host-login" element={<HostLogin />} />
       </Routes>
     </>
   );

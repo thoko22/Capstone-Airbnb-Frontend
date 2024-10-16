@@ -399,3 +399,47 @@
   border-color: #ff66b3;
   box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
 }
+.profile-menu-icons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  max-width: fit-content;
+  padding: 0px 0;
+  z-index: 1000;
+}
+
+.dropdown-option {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #ff66b3; 
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-option:hover {
+  background-color: #eeb2e5;
+}
+
+.dropdown-option:not(:last-child) {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.account-icon {
+  font-size: 30px;
+  color: #333;
+}
+
+.menu-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}

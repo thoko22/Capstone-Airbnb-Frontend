@@ -1,26 +1,25 @@
 import React, { useState } from "react";
-import "./HostLogin.css"; // Add CSS file for styling if needed
-import api from "../../api"; // Adjust the path to your API file
+import { useNavigate } from "react-router-dom";
+import api from "../../api";
+import "./HostLogin.css";
+import { useAuth } from "./AuthContext";
 
-const HostLogin = ({ onLoginSuccess }) => {
+const HostLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { loginHost } = useAuth();
 
-  // Handle login form submission
   const handleHostLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await api.post('/users/login', { email, password });
-      // Save the JWT token in local storage or cookie
-      localStorage.setItem('hostToken', response.data.token);
-      setEmail(''); // Clear email input
-      setPassword(''); // Clear password input
+      loginHost(response.data.token);
+      setEmail(''); 
+      setPassword('');
       alert('Host login successful!');
-      console.log('Host login successful for:', email);
-      
-      if (onLoginSuccess) {
-        onLoginSuccess(email); // Pass the email to the parent component on successful login
-      }
+      // Redirect to admin dashboard
+      navigate('/admin');
     } catch (error) {
       console.error('Host login failed:', error);
       alert('Host login failed. Please check your credentials.');
@@ -41,7 +40,6 @@ const HostLogin = ({ onLoginSuccess }) => {
             required
           />
         </div>
-
         <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
@@ -52,10 +50,7 @@ const HostLogin = ({ onLoginSuccess }) => {
             required
           />
         </div>
-
-        <button type="submit" className="submit-button">
-          Login
-        </button>
+        <button type="submit" className="submit-button">Login</button>
       </form>
     </div>
   );

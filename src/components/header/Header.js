@@ -13,6 +13,7 @@ import Modal from "react-modal";
 import Login from "../login/Login";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import HostLogin from "../login/HostLogin";
+import { useAuth } from "../login/AuthContext";
 
 const Header = () => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -26,33 +27,36 @@ const Header = () => {
   const [locations, setLocations] = useState([]);
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [hostMessage, setHostMessage] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // User login state
-  const [isHostLoggedIn, setIsHostLoggedIn] = useState(false);
+
+  const { isLoggedIn, isHostLoggedIn, logout } = useAuth(); // Get values from AuthContext
+
+  const handleLogout = () => {
+      logout(); // Call the logout function from context
+  };
+
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
   const navigate = useNavigate();
   const popupRef = useRef(null);
+  const accountDropdownRef = useRef(null);
 
   // Fetch locations from the accommodations API
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch(
-          "/accommodations"
-        );
+        const response = await fetch("/accommodations");
 
-        // Check if response is OK (status in the range 200-299)
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log("Fetched data:", data); // Check what you get from the API
+        console.log("Fetched data:", data);
 
-        const uniqueLocations = [...new Set(data.map((item) => item.location))]; // Extract unique locations
-        setLocations(uniqueLocations.map((location) => ({ name: location }))); // Set locations state
-        console.log("Fetched locations:", uniqueLocations); // Debugging line
-      } catch (error) {
-      }
+        const uniqueLocations = [...new Set(data.map((item) => item.location))];
+        console.log("Unique Locations:", uniqueLocations);
+        setLocations(uniqueLocations);
+      } catch (error) {}
     };
 
     fetchLocations();
@@ -61,11 +65,10 @@ const Header = () => {
   // Handle location selection
   const handleLocationClick = (locationName) => {
     if (locationName === "All Locations") {
-      navigate("/locations"); // Navigate to the new locations list page
+      navigate("/locations");
     } else {
       setSelectedLocation(locationName);
-      console.log(`Selected location: ${locationName}`);
-      setShowLocationDropdown(false); // Close the dropdown after selection
+      setShowLocationDropdown(false);
     }
   };
 
@@ -103,32 +106,23 @@ const Header = () => {
     };
   }, [showGuestPopup]);
 
+  // Open/Close modals
   const openLoginModal = () => setIsModalOpen(true);
   const closeLoginModal = () => setIsModalOpen(false);
-
   const openHostModal = () => setIsHostModalOpen(true);
   const closeHostModal = () => setIsHostModalOpen(false);
 
-  const handleLoginSuccess = (email) => {
+  // Handle login and logout functionality
+  const handleLoginSuccess = (email) => {;
     setWelcomeMessage(`Welcome, ${email}`);
-    setIsLoggedIn(true); // Set user login state
+    setShowAccountDropdown(false);
     closeLoginModal();
   };
 
   const handleHostLoginSuccess = (email) => {
     setHostMessage(`Welcome, Host ${email}`);
-    setIsHostLoggedIn(true); // Set host login state
+    setShowAccountDropdown(false);
     closeHostModal();
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false); // Reset user login state
-    setWelcomeMessage("");
-  };
-
-  const handleHostLogout = () => {
-    setIsHostLoggedIn(false); // Reset host login state
-    setHostMessage("");
   };
 
   return (
@@ -145,58 +139,83 @@ const Header = () => {
           <p>Online Experiences</p>
         </div>
         <div className="header-links">
-          <Link onClick={openHostModal}>Become a host</Link>{" "}
-          {/* Host Login Link */}
+          <Link onClick={openHostModal}>Become a host</Link>
           <LanguageIcon className="language-icon" />
-          <div className="profile-menu-icons">
+          <div className="profile-menu-icons" ref={accountDropdownRef}>
             <MenuIcon className="menu-icon" />
             <AccountCircleIcon
               className="account-icon"
-              onClick={openLoginModal}
+              onClick={() => setShowAccountDropdown(!showAccountDropdown)}
             />
+
+            {/* Account Dropdown */}
+            {showAccountDropdown && (
+              <div className="account-dropdown">
+                {!isLoggedIn && !isHostLoggedIn && (
+                  <div onClick={openLoginModal} className="dropdown-option">
+                    Login
+                  </div>
+                )}
+
+                {/* Show "View Reservations" and "Logout" if user or host is logged in */}
+                {(isLoggedIn || isHostLoggedIn) && (
+                  <>
+                    <div
+                      onClick={() => navigate("/view-reservations")}
+                      className="dropdown-option"
+                    >
+                      View Reservations
+                    </div>
+                    <div onClick={handleLogout} className="dropdown-option">
+                      Logout
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       <div className="header-bottom">
-        <div className="header-search">
-          <div className="search-where">
-            <p>All locations</p>
-            <div
-              className="search-input-location"
-              onClick={() => {
-                setShowLocationDropdown(!showLocationDropdown);
-              }}
-            >
-              <input
-                type="text"
-                value={selectedLocation}
-                readOnly
-                placeholder="Select a location"
-                className="location-input"
-              />
-              <ArrowDropDownIcon className="location-dropdown-icon" />
-            </div>
-            {showLocationDropdown && (
-              <div className="location-dropdown">
-                <div
-                  className="location-option"
-                  onClick={() => handleLocationClick("All Locations")}
-                >
-                  All Locations
-                </div>
-                {locations.map((location, index) => (
-                  <div
-                    key={index}
-                    className="location-option"
-                    onClick={() => handleLocationClick(location.name)}
-                  >
-                    {location.name}
-                  </div>
-                ))}
-              </div>
-            )}
+      <div className="header-search">
+        <div className="search-where">
+          <p>All locations</p>
+          <div
+            className="search-input-location"
+            onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+          >
+            <input
+              type="text"
+              value={selectedLocation}
+              readOnly
+              placeholder="Select a location"
+              className="location-input"
+            />
+            <ArrowDropDownIcon className="location-dropdown-icon" />
           </div>
+          {showLocationDropdown && (
+            <div className="location-dropdown">
+              {/* Display "All Locations" option */}
+              <div
+                className="location-option"
+                onClick={() => handleLocationClick("All Locations")}
+              >
+                All Locations
+              </div>
+              {/* Map over locations to display them */}
+              {locations.map((location, index) => (
+                <div
+                  key={index}
+                  className="location-option"
+                  onClick={() => handleLocationClick(location)}
+                >
+                  {location}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
           <div className="search-checkin">
             <p>Check in date</p>
@@ -283,7 +302,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {/* Modal for User Login */}
+      {/* Modals */}
       <Modal
         isOpen={isLoginModalOpen}
         onRequestClose={closeLoginModal}
@@ -297,21 +316,6 @@ const Header = () => {
         <Login onLoginSuccess={handleLoginSuccess} />
       </Modal>
 
-      {/* Logout button for user */}
-      {isLoggedIn && (
-        <button onClick={handleLogout} className="logout-button">
-          Logout
-        </button>
-      )}
-
-      {/* Logout button for host */}
-      {isHostLoggedIn && (
-        <button onClick={handleHostLogout} className="logout-button">
-          Host Logout
-        </button>
-      )}
-
-      {/* Modal for Host Login */}
       <Modal
         isOpen={isHostModalOpen}
         onRequestClose={closeHostModal}
@@ -322,8 +326,7 @@ const Header = () => {
         <button className="close-modal" onClick={closeHostModal}>
           x
         </button>
-        <HostLogin onLoginSuccess={handleHostLoginSuccess} />{" "}
-        {/* Host Login Form */}
+        <HostLogin onLoginSuccess={handleHostLoginSuccess} />
       </Modal>
 
       {welcomeMessage && <h2>{welcomeMessage}</h2>}
@@ -333,4 +336,3 @@ const Header = () => {
 };
 
 export default Header;
-
