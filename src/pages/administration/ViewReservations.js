@@ -13,10 +13,15 @@ const ViewReservations = () => {
 
   // Fetch reservations from the backend
   const fetchReservations = async () => {
+    const token = localStorage.getItem("token");
+    const hostToken = localStorage.getItem("hostToken");
+
+    const authorizationToken = token || hostToken; // Use whichever token is available
+
     try {
       const response = await axios.get("http://localhost:5005/api/reservations", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Use token stored in local storage
+          Authorization: `Bearer ${authorizationToken}`,
         },
       });
       setReservations(response.data);
@@ -34,12 +39,19 @@ const ViewReservations = () => {
   const handleDelete = async (id) => {
     console.log("Deleting reservation with ID:", id);
     try {
+      // Retrieve both tokens
+      const token = localStorage.getItem("token");
+      const hostToken = localStorage.getItem("hostToken");
+
+      // Determine which token to use
+      const authorizationToken = token || hostToken;
+
       await axios.delete(`http://localhost:5005/api/reservations/${id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure token is correctly retrieved
+          Authorization: `Bearer ${authorizationToken}`,
         },
       });
-      
+
       setReservations((prev) => prev.filter((reservation) => reservation._id !== id));
     } catch (err) {
       setError(err.response ? err.response.data.message : "Error deleting reservation");
