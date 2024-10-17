@@ -73,6 +73,7 @@ h2 {
   display: inline-block;
   padding: 10px 20px;
   border: none;
+  max-width: fit-content;
   border-radius: 25px;
   background-color: #ff6f61; 
   color: white;

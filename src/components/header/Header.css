@@ -149,8 +149,11 @@
   outline: none;
   padding: 10px;
   border-radius: 8px;
-  width: 100%; /* Full width within its container */
+  width: 100%;
   box-sizing: border-box;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f0f7;
+  transition: all 0.3s ease;
 }
 
 .search-input-location input{
@@ -442,4 +445,49 @@
 .menu-icon {
   font-size: 24px;
   margin-right: 10px;
+}
+.search-where {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Arial', sans-serif;
+}
+.location {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.search-where div {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.search-input select {
+  width: 55%;
+  max-width: fit-content;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  color: #333;
+  background-color: #f9f0f7;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.search-input select:hover {
+  border-color: #ff80ab; 
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.search-input select:focus {
+  border-color: #ff80ab; 
+}
+
+.search-input option {
+  padding: 10px;
+  background-color: white;
+  color: #333;
 }

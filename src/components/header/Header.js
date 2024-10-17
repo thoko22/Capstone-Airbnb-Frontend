@@ -11,9 +11,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Modal from "react-modal";
 import Login from "../login/Login";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import HostLogin from "../login/HostLogin";
 import { useAuth } from "../login/AuthContext";
+import axios from "axios";
 
 const Header = () => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -23,15 +23,14 @@ const Header = () => {
   const [isLoginModalOpen, setIsModalOpen] = useState(false);
   const [isHostModalOpen, setIsHostModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("Select a location");
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [locations, setLocations] = useState([]);
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [hostMessage, setHostMessage] = useState("");
 
-  const { isLoggedIn, isHostLoggedIn, logout } = useAuth(); // Get values from AuthContext
+  const { isLoggedIn, isHostLoggedIn, logout } = useAuth();
 
   const handleLogout = () => {
-      logout(); // Call the logout function from context
+      logout(); // Calling the logout function from context
   };
 
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
@@ -44,31 +43,27 @@ const Header = () => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch("/accommodations");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Fetched data:", data);
-
-        const uniqueLocations = [...new Set(data.map((item) => item.location))];
-        console.log("Unique Locations:", uniqueLocations);
-        setLocations(uniqueLocations);
-      } catch (error) {}
+        const response = await axios.get('http://localhost:5005/api/accommodations');
+        setLocations(response.data);
+      } catch (error) {
+        console.error('Error fetching locations:', error);
+      }
     };
 
     fetchLocations();
   }, []);
 
-  // Handle location selection
-  const handleLocationClick = (locationName) => {
-    if (locationName === "All Locations") {
-      navigate("/locations");
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    
+    if (selectedValue === "all") {
+      navigate("/locations"); 
     } else {
-      setSelectedLocation(locationName);
-      setShowLocationDropdown(false);
+      const selectedLocation = locations.find(location => location.location === selectedValue);
+      if (selectedLocation) {
+        setSelectedLocation(selectedValue);
+        navigate(`/location-details/${selectedLocation._id}`);
+      }
     }
   };
 
@@ -180,41 +175,22 @@ const Header = () => {
       <div className="header-bottom">
       <div className="header-search">
         <div className="search-where">
-          <p>All locations</p>
-          <div
-            className="search-input-location"
-            onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-          >
-            <input
-              type="text"
+          <div className="location">Location</div>
+          <div className="search-input">
+            <select
+              id="location-select"
               value={selectedLocation}
-              readOnly
-              placeholder="Select a location"
-              className="location-input"
-            />
-            <ArrowDropDownIcon className="location-dropdown-icon" />
-          </div>
-          {showLocationDropdown && (
-            <div className="location-dropdown">
-              {/* Display "All Locations" option */}
-              <div
-                className="location-option"
-                onClick={() => handleLocationClick("All Locations")}
-              >
-                All Locations
-              </div>
-              {/* Map over locations to display them */}
-              {locations.map((location, index) => (
-                <div
-                  key={index}
-                  className="location-option"
-                  onClick={() => handleLocationClick(location)}
-                >
-                  {location}
-                </div>
+              onChange={handleSelectChange}
+            >
+              <option value="">Select a location</option>
+              <option value="all">All locations</option>
+              {locations.map((location) => (
+                <option key={location._id} value={location.location}>
+                  {location.location}
+                </option>
               ))}
-            </div>
-          )}
+            </select>
+          </div>
         </div>
 
           <div className="search-checkin">
