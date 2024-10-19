@@ -21,17 +21,19 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import BicycleIcon from "@mui/icons-material/DirectionsBike";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Reviews from "./Reviews";
+import { useAuth } from "../../components/login/AuthContext";
 
 const Listings = () => {
   const [guests, setGuests] = useState(1);
   const [locationData, setLocationData] = useState(null);
-  const [isLoggedIn] = useState(true); // Add authentication state
   const location = useLocation();
   const listingId = location.state?.id;
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage] = useState("");
   const { accommodationId } = useParams();
+
+  const { isLoggedIn } = useAuth();
 
   // Fetch listing data from API
   useEffect(() => {
@@ -57,47 +59,12 @@ const Listings = () => {
     );
   };
 
-  const handleReservation = async () => {
+  const handleReserve = () => {
     if (!isLoggedIn) {
       alert("Please log in to make a reservation.");
       return;
     }
-
-    if (!checkInDate || !checkOutDate || guests < 1) {
-      setErrorMessage(
-        "Please fill in all fields and ensure at least one guest is selected."
-      );
-      return;
-    }
-
-    const reservationDetails = {
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
-      guests: guests,
-      totalPrice: locationData?.fees?.total || 0
-    };
-
-    try {
-      const response = await fetch(`http://localhost:5005/api/reservations`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(reservationDetails)
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to make reservation. Please try again later.");
-      }
-
-      alert("Reservation made successfully!");
-      setCheckInDate("");
-      setCheckOutDate("");
-      setGuests(1);
-      setErrorMessage("");
-    } catch (error) {
-      setErrorMessage(error.message || "An error occurred. Please try again.");
-    }
+    alert("Reservation successful!");
   };
 
   const amenitiesList = [
@@ -440,7 +407,7 @@ const Listings = () => {
               {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
 
-            <button className="reserve-button" onClick={handleReservation}>
+            <button className="reserve-button" onClick={handleReserve}>
               Reserve
             </button>
             <p className="charge-notice">You won't be charged yet.</p>

@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  box-sizing: border-box; /* Ensures padding and borders are included in width */
+  box-sizing: border-box;
   padding: 10px 20px;
   background-color: #fff;
   display: flex;
@@ -26,7 +26,7 @@
 }
 
 .header-logo:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  transform: scale(1.05);
 }
 
 .header-links {
@@ -85,15 +85,14 @@
 .header-text p:hover {
   background-color: #efe6e6;
 }
-/* search section */
 
 .header-bottom {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: white; /* Or a color from your Figma design */
+  background-color: white;
   padding: 10px;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
   overflow-x: auto;
@@ -122,7 +121,7 @@
   flex-direction: column;
   padding: 0 10px;
   text-align: start;
-  flex: 1; /* Ensure all sections take equal space */
+  flex: 1;
   min-width: 0;
 }
 
@@ -136,7 +135,7 @@
   text-align: start;
 }
 .search-where, .search-checkin, .search-checkout {
-  flex: 1; /* Ensure equal space distribution */
+  flex: 1;
 }
 
 .search-who {
@@ -177,7 +176,7 @@
 }
 
 .search-button:hover {
-  border-color: #000; /* Add hover effect */
+  border-color: #000; 
 }
 
 /* Guests */

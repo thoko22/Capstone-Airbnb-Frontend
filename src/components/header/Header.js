@@ -39,6 +39,10 @@ const Header = () => {
   const popupRef = useRef(null);
   const accountDropdownRef = useRef(null);
 
+  const navigateHome = () => {
+    navigate("/");
+  };
+
   // Fetch locations from the accommodations API
   useEffect(() => {
     const fetchLocations = async () => {
@@ -127,6 +131,7 @@ const Header = () => {
           src="https://1000logos.net/wp-content/uploads/2023/01/Airbnb-logo.png"
           className="header-logo"
           alt="logo"
+          onClick={navigateHome}
         />
         <div className="header-text">
           <p>Places to stay</p>
