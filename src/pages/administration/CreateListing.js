@@ -164,13 +164,12 @@ const CreateListing = () => {
     <h2>Create Listing</h2>
     <div className="container">
       <form className="create-listing-form" id="listingForm">
-        {/* Listing Name */}
+
         <div className="form-group">
           <label htmlFor="listing-name">Listing Name</label>
           <input type="text" id="listing-name" name="listingName" required />
         </div>
 
-        {/* Bedrooms and Bathrooms */}
         <div className="form-group row">
           <div>
             <label htmlFor="rooms">Bedrooms</label>
@@ -261,7 +260,6 @@ const CreateListing = () => {
           ></textarea>
         </div>
 
-        {/* Form buttons */}
         <div className="form-buttons">
           <button className="create" type="submit" id="createButton">
             Create

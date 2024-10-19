@@ -1,25 +1,23 @@
-/* Container for the login form */
+
 .login-form {
   max-width: 400px;
   margin: 0 auto;
   padding: 30px;
   border: 1px solid #ddd;
   border-radius: 12px;
-  background-color: #fef0f6; /* Light pink background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  background-color: #fef0f6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for form groups (label and input) */
 .form-group {
   margin-bottom: 20px;
 }
 
-/* Style for labels */
 .form-group label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #d46a77; /* Slightly darker pink */
+  color: #d46a77;
   font-size: 16px;
 }
 
@@ -27,24 +25,23 @@
 .form-group input {
   width: 100%;
   padding: 12px;
-  border: 1px solid #e1b2b7; /* Light pink border */
+  border: 1px solid #e1b2b7;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 16px;
   color: #333;
-  background-color: #fff; /* White background for input fields */
+  background-color: #fff;
   transition: border-color 0.3s ease;
 }
 
 /* Input focus state */
 .form-group input:focus {
-  border-color: #f6a5a1; /* Slightly more intense pink */
+  border-color: #f6a5a1;
   outline: none;
 }
-
-/* Style for the submit button */
+*/
 .submit-button {
-  background-color: #f6a5a1; /* Light pink background */
+  background-color: #f6a5a1;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -57,19 +54,16 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Submit button hover effect */
 .submit-button:hover {
-  background-color: #d46a77; /* Darker pink on hover */
-  transform: scale(1.05); /* Slightly enlarge button on hover */
+  background-color: #d46a77;
+  transform: scale(1.05);
 }
 
-/* Submit button active state */
 .submit-button:active {
-  background-color: #b93f5f; /* Even darker pink when button is pressed */
-  transform: scale(1); /* Reset button size */
+  background-color: #b93f5f;
+  transform: scale(1);
 }
 
-/* Cancel button styles */
 .cancel-button {
   background-color: #ff4d4f; 
   color: white;
@@ -90,14 +84,12 @@
   right: 10px;
 }
 
-/* Cancel button hover effect */
 .cancel-button:hover {
-  background-color: #e60023; /* Darker red on hover */
-  transform: scale(1.1); /* Slightly enlarge button on hover */
+  background-color: #e60023;
+  transform: scale(1.1);
 }
 
-/* Cancel button active state */
 .cancel-button:active {
-  background-color: #b3001f; /* Even darker red when button is pressed */
-  transform: scale(1); /* Reset button size */
+  background-color: #b3001f;
+  transform: scale(1);
 }

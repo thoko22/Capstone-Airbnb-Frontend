@@ -39,7 +39,7 @@
 
 .rating-stars {
   margin-left: 10px; 
-  color: #ff385c; /* Star color */
+  color: #ff385c;
 }
 
 .rating-total {
@@ -218,7 +218,6 @@
   line-height: 1.6;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .things-to-know-categories {
     flex-direction: column;

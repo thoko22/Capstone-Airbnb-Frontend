@@ -1,4 +1,3 @@
-/* LocationPage.css */
 
 .location-page {
   padding: 20px;
@@ -34,7 +33,7 @@
 
 .location-image {
   max-width: fit-content;
-  height: 150px; /* Smaller height */
+  height: 150px;
   object-fit: cover;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
@@ -51,30 +50,30 @@
 
 .location-card-content h2 {
   margin: 0 0 10px;
-  color: #ff69b4; /* Hot pink for location title */
+  color: #ff69b4; 
 }
 
 .location-description {
-  list-style: none; /* Remove default list styling */
+  list-style: none;
   padding: 0;
-  margin: 10px 0 0 0; /* Separate from the title */
+  margin: 10px 0 0 0;
 }
 
 .location-description li {
   margin: 5px 0;
-  color: #4d4d4d; /* Soft gray text color */
+  color: #4d4d4d;
 }
 
 .location-description li span {
   font-weight: bold;
-  color: #ff69b4; /* Hot pink for emphasis */
+  color: #ff69b4; 
 }
 
 .location-page h1 {
   text-align: center;
-  color: #ff69b4; /* Hot pink for header text */
+  color: #ff69b4;
   margin-bottom: 30px;
-  font-family: 'Comic Sans MS', cursive; /* Playful font style */
+  font-family: 'Comic Sans MS', cursive; 
 }
 .star-rating {
   display: flex;
